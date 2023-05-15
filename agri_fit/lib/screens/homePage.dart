@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               child: Text('To the profile'),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(editName: '', editAge: '', editGen: '', editHeight: '', editWeight: '',)));
               },
             ),
             ElevatedButton(

@@ -1,8 +1,17 @@
+import 'package:agri_fit/screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/EditProfilePage.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  //const ProfilePage({Key? key}) : super(key: key);
+  String editName;
+  String editAge;
+  String editGen;
+  String editHeight;
+  String editWeight;
+
+  ProfilePage({required this.editName, required this.editAge, required this.editGen, required this.editHeight, required this.editWeight});
 
   static const route = '/profile/';
   static const routename = 'ProfilePage';
@@ -14,14 +23,26 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(ProfilePage.routename),
       ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('To the home'),
-          onPressed: () {
-            //This allows to go back to the HomePage
-            Navigator.pop(context);
-          },
+      body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Icon(Icons.account_box_rounded, size: 120)
+            //Container(color: Colors.blue, width: 100, height: 100,),
+            ,Column(mainAxisAlignment: MainAxisAlignment.center, 
+            children: [
+              Text('Name: $editName'),
+              Text('Gender: $editGen'),
+              Text('Age: $editAge '),
+              Text('Height: $editHeight'),
+              Text('Weight: $editWeight')
+            ],)
+          ],
         ),
+        Text('BMI'),
+        Text('Indicasjon')
+        
+        ]
       ),
       drawer: Drawer(
         child: ListView(
@@ -35,15 +56,22 @@ class ProfilePage extends StatelessWidget {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage()));
               },
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.delete_forever),
-              title: const Text('Delete Account'),
+              title: Text('Delete Account'),
               //Slett bruker
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.logout_outlined),
-              title: const Text('Log Out'), 
+              title: Text('Log Out'), 
               //Logg ut
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('To Home Page'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+              },
             )
           ],
         ),

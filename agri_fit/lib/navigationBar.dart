@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:agri_fit/screens/profilePage.dart';
+import 'package:agri_fit/screens/EditProfilePage.dart';
 import 'package:agri_fit/screens/mapPage.dart';
 
 class NavBar extends StatefulWidget {
@@ -21,6 +22,22 @@ class _HomePageState extends State<NavBar> {
       _selectedIndex = index;
     });
   }
+
+  Map<int, GlobalKey<NavigatorState>> navigatorKeys = {
+    0: GlobalKey<NavigatorState>(),
+    1: GlobalKey<NavigatorState>(),
+    2: GlobalKey<NavigatorState>(),
+  };
+
+  //IMPORTANT: must incorporate "IndexedStack"
+  buildNavigator() {
+    return Navigator(
+      key: navigatorKeys[_selectedIndex],
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(builder: (_) => _buildBody.elementAt(_selectedIndex));
+      },
+    );
+  }
   
   final _buildBody = <Widget>[
     HomePage(),
@@ -28,7 +45,7 @@ class _HomePageState extends State<NavBar> {
     ProfilePage(editName: '', editAge: '', editGen: '', editHeight: '', editWeight: '',),
   ];
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
@@ -49,7 +66,6 @@ class _HomePageState extends State<NavBar> {
               padding: EdgeInsets.all(16),
               iconSize: 32,
               
-              
               tabs: const [
                 GButton(icon: Icons.home, text: 'Home'),
                 GButton(icon: Icons.map, text: 'Map'),
@@ -62,7 +78,8 @@ class _HomePageState extends State<NavBar> {
             ),
         ),
       ),
-      body: IndexedStack(index: _selectedIndex, children: _buildBody)
+      body: buildNavigator(),
+      //body: IndexedStack(index: _selectedIndex, children: _buildBody)
     );
   }
 }

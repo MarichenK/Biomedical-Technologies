@@ -25,7 +25,7 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.grey[50],
         elevation: 0,
         //title: Text(ProfilePage.routename),
-        title: Text('NAME', textScaleFactor: 1.5,),
+        title: Text('$editName', textScaleFactor: 1.5,),
         foregroundColor: Color.fromARGB(255, 93, 155, 97),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -73,14 +73,6 @@ class ProfilePage extends StatelessWidget {
               title: Text('Log Out'), 
               //Logg ut
             ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('To Home Page'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-                //navigate(context, HomePage.route, isRootNavigator: false);
-              },
-            )
           ],
         ),
       ),

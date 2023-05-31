@@ -19,11 +19,25 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
             child: Container(
-              height: 170,
+              height: 340,
+              color: Color.fromARGB(255, 237, 237, 237),
+              child: Center(child: Text('Goal'),),
+            )),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Container(
+              height: 140,
               color: Color.fromARGB(255, 237, 237, 237),
               child: Center(child: Text('Steps'),),
+            )),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: Container(
+              height: 140,
+              color: Color.fromARGB(255, 237, 237, 237),
+              child: Center(child: Text('Calories'),),
             )),
         ]),
     );

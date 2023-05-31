@@ -1,6 +1,7 @@
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/EditProfilePage.dart';
+import 'package:agri_fit/navigationBar.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
@@ -14,13 +15,14 @@ class ProfilePage extends StatelessWidget {
   ProfilePage({required this.editName, required this.editAge, required this.editGen, required this.editHeight, required this.editWeight});
 
   static const route = '/profile/';
-  static const routename = 'ProfilePage';
+  static const routename = 'Profile';
 
   @override
   Widget build(BuildContext context) {
     print('${ProfilePage.routename} built');
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 93, 155, 97),
         title: Text(ProfilePage.routename),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -71,6 +73,7 @@ class ProfilePage extends StatelessWidget {
               title: Text('To Home Page'),
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                //navigate(context, HomePage.route, isRootNavigator: false);
               },
             )
           ],

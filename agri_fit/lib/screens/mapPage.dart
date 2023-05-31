@@ -4,23 +4,15 @@ class MapPage extends StatelessWidget {
   const MapPage({Key? key}) : super(key: key);
 
   static const route = '/map/';
-  static const routename = 'MapPage';
+  static const routename = 'Map';
 
   @override
   Widget build(BuildContext context) {
     print('${MapPage.routename} built');
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 93, 155, 97),
         title: Text(MapPage.routename),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: Text('To the home'),
-          onPressed: () {
-            //This allows to go back to the HomePage
-            Navigator.pop(context);
-          },
-        ),
       ),
     );
   } //build

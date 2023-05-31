@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:agri_fit/screens/profilePage.dart';
 import 'package:agri_fit/screens/mapPage.dart';
@@ -26,14 +28,46 @@ class _HomePageState extends State<NavBar> {
     ProfilePage(editName: '', editAge: '', editGen: '', editHeight: '', editWeight: '',),
   ];
 
-  /*
-  List<Widget> get _pages => [
-    HomePage(),
-    MapPage(),
-    ProfilePage(editName: '', editAge: '', editGen: '', editHeight: '', editWeight: '',),
-  ];
-  */
+    @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          border: Border(top: BorderSide(color: Colors.grey.shade200)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 15.0,
+            vertical: 15.0),
+            
+            child: GNav(
+              gap: 9,
+              color: Colors.grey,
+              activeColor: Colors.black,
+              tabBackgroundColor: Colors.grey.shade200,
+              padding: EdgeInsets.all(16),
+              iconSize: 32,
+              
+              
+              tabs: const [
+                GButton(icon: Icons.home, text: 'Home'),
+                GButton(icon: Icons.map, text: 'Map'),
+                GButton(icon: Icons.person, text: 'Profile')
+              ],
+      
+            selectedIndex: _selectedIndex,
+            onTabChange: _navigateBottomBar,
+      
+            ),
+        ),
+      ),
+      body: IndexedStack(index: _selectedIndex, children: _buildBody)
+    );
+  }
+}
 
+  /*
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,3 +89,4 @@ class _HomePageState extends State<NavBar> {
     );
   }
 }
+*/

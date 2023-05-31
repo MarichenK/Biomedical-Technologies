@@ -22,16 +22,19 @@ class ProfilePage extends StatelessWidget {
     print('${ProfilePage.routename} built');
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 93, 155, 97),
-        title: Text(ProfilePage.routename),
+        backgroundColor: Colors.grey[50],
+        elevation: 0,
+        //title: Text(ProfilePage.routename),
+        title: Text('NAME', textScaleFactor: 1.5,),
+        foregroundColor: Color.fromARGB(255, 93, 155, 97),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(Icons.account_box_rounded, size: 120)
+            Icon(Icons.account_box_rounded, size: 120),
             //Container(color: Colors.blue, width: 100, height: 100,),
-            ,Column(mainAxisAlignment: MainAxisAlignment.center, 
+            Column(mainAxisAlignment: MainAxisAlignment.center, 
             children: [
               Text('Name: $editName'),
               Text('Gender: $editGen'),
@@ -47,6 +50,8 @@ class ProfilePage extends StatelessWidget {
         ]
       ),
       drawer: Drawer(
+        shadowColor: Colors.white.withOpacity(0),
+
         child: ListView(
           padding: EdgeInsets.zero,
           children: [

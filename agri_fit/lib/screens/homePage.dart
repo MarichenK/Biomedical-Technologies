@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,21 +20,21 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 15, left: 17, right: 17),
             child: Container(
               height: 340,
               color: Color.fromARGB(255, 237, 237, 237),
               child: Center(child: Text('Goal'),),
             )),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 20, left: 17, right: 17),
             child: Container(
               height: 140,
               color: Color.fromARGB(255, 237, 237, 237),
               child: Center(child: Text('Steps'),),
             )),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 20, left: 17, right: 17),
             child: Container(
               height: 140,
               color: Color.fromARGB(255, 237, 237, 237),
@@ -44,3 +45,12 @@ class HomePage extends StatelessWidget {
   } //build
 
 } //ProfilePage
+
+
+void test = LineChart(
+  LineChartData(
+    // read about it in the LineChartData section
+  ),
+  swapAnimationDuration: Duration(milliseconds: 150), // Optional
+  swapAnimationCurve: Curves.linear, // Optional
+);

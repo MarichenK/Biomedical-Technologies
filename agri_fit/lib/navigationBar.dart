@@ -55,7 +55,7 @@ class _HomePageState extends State<NavBar> {
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 15.0,
+            horizontal: 28.0,
             vertical: 15.0),
             
             child: GNav(
@@ -83,27 +83,3 @@ class _HomePageState extends State<NavBar> {
     );
   }
 }
-
-  /*
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
-        iconSize: 32,
-        currentIndex: _selectedIndex,
-        onTap: _navigateBottomBar,
-        //onTap: navigate(context, FeedDetail.),
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Map'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ]),
-      //body: _pages[_selectedIndex],
-      body: IndexedStack(index: _selectedIndex, children: _buildBody)
-    );
-  }
-}
-*/

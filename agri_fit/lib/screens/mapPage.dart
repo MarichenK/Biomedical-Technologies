@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final List _stores = [
     'Eurospar',
@@ -14,12 +15,23 @@ class MapPage extends StatelessWidget {
   static const route = '/map/';
   static const routename = 'Map';
 
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri(scheme: 'https:', host: url);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw 'Cannot launch url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     print('${MapPage.routename} built');
     return Padding(
       padding: const EdgeInsets.only(left: 17, right: 17),
       child: Scaffold(
+
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(0.0),
             child: AppBar(
@@ -27,6 +39,7 @@ class MapPage extends StatelessWidget {
               elevation: 0,
             ),
           ),
+
           body: Column(
             children: [
               Container(
@@ -38,6 +51,7 @@ class MapPage extends StatelessWidget {
                       image: AssetImage('assets/map_image.jpg'),
                     )),
               ),
+
               const Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 17),
                 child: Align(
@@ -45,12 +59,14 @@ class MapPage extends StatelessWidget {
                   child: Text(
                     'Stores near you',
                     textScaleFactor: 1.5,
+                    style: TextStyle(fontWeight: FontWeight.bold)
                   ),
                 ),
               ),
+
               Expanded(
                 child: GridView.count(
-                    childAspectRatio: 1.2,
+                    childAspectRatio: 1.4,
                     crossAxisSpacing: 20,
                     crossAxisCount: 2,
                     
@@ -59,14 +75,21 @@ class MapPage extends StatelessWidget {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Container(
-                            height: 140,
-                            decoration: const BoxDecoration(
-                                color: Color.fromARGB(255, 237, 237, 237),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Center(
-                              child: Text(_stores[index]),
+                          SizedBox(
+                            height: 120,
+                            child: ElevatedButton(
+                              
+                              style: ButtonStyle(
+                                elevation: const MaterialStatePropertyAll(0),
+                                backgroundColor: const MaterialStatePropertyAll(Color.fromARGB(255, 237, 237, 237)),
+                                foregroundColor: const MaterialStatePropertyAll(Colors.black),
+                                shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))) 
+                              ),
+                              onPressed: () {/*_launchURL('www.vg.no/');*/},
+
+                              child: Center(
+                                child: Text(_stores[index]),
+                              ),
                             ),
                           ),
                         ],

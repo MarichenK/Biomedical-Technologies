@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final List _stores = [
-    'Eurospar',
-    'Conad',
-    'Pam',
-    'Iper Rosetto',
-    'Ali',
-    'Lidl',
-    'Eurospin'
+    ['Eurospar', 'https://www.google.com/maps/search/EUROSPAR/'],
+    ['Conad', 'https://www.google.com/maps/search/Conad/'],
+    ['Pam', 'https://www.google.com/maps/search/pam+local/'],
+    ['Iper Rosetto', 'https://www.google.com/maps/search/iper+rosetto/'],
+    ['Ali', 'https://www.google.com/maps/search/Al%C3%AC+Supermercato/'],
+    ['Lidl', 'https://www.google.com/maps/search/lidl/'],
+    ['Eurospin', 'https://www.google.com/maps/search/Eurospin/']
   ];
 
 class MapPage extends StatelessWidget {
@@ -16,7 +16,7 @@ class MapPage extends StatelessWidget {
   static const routename = 'Map';
 
   Future<void> _launchURL(String url) async {
-    final Uri uri = Uri(scheme: 'https:', host: url);
+    final Uri uri = Uri.parse(url);
     if (!await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
@@ -42,14 +42,17 @@ class MapPage extends StatelessWidget {
 
           body: Column(
             children: [
-              Container(
-                height: 450,
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    image: DecorationImage(
-                      fit: BoxFit.fitWidth,
-                      image: AssetImage('assets/map_image.jpg'),
-                    )),
+              InkWell(
+                onTap: () {_launchURL("https://www.google.com/maps/place/Dipartimento+di+Ingegneria+dell'Informazione+(DEI)/@45.4088728,11.8935797,17.8z/data=!4m6!3m5!1s0x477edb664644067d:0xb57b9fafc118efea!8m2!3d45.4090531!4d11.894346!16s%2Fg%2F11smqr8g50?entry=ttu");},
+                child: Container(
+                  height: 450,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      image: DecorationImage(
+                        fit: BoxFit.fitWidth,
+                        image: AssetImage('assets/map_image.jpg'),
+                      )),
+                ),
               ),
 
               const Padding(
@@ -85,10 +88,10 @@ class MapPage extends StatelessWidget {
                                 foregroundColor: const MaterialStatePropertyAll(Colors.black),
                                 shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))) 
                               ),
-                              onPressed: () {/*_launchURL('www.vg.no/');*/},
+                              onPressed: () {_launchURL(_stores[index][1]);},
 
                               child: Center(
-                                child: Text(_stores[index]),
+                                child: Text(_stores[index][0]),
                               ),
                             ),
                           ),

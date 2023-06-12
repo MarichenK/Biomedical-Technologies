@@ -1,6 +1,7 @@
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/EditProfilePage.dart';
+import 'package:agri_fit/navigationBar.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
@@ -14,22 +15,26 @@ class ProfilePage extends StatelessWidget {
   ProfilePage({required this.editName, required this.editAge, required this.editGen, required this.editHeight, required this.editWeight});
 
   static const route = '/profile/';
-  static const routename = 'ProfilePage';
+  static const routename = 'Profile';
 
   @override
   Widget build(BuildContext context) {
     print('${ProfilePage.routename} built');
     return Scaffold(
       appBar: AppBar(
-        title: Text(ProfilePage.routename),
+        backgroundColor: Colors.grey[50],
+        elevation: 0,
+        //title: Text(ProfilePage.routename),
+        title: Text('$editName', textScaleFactor: 1.5,),
+        foregroundColor: Color.fromARGB(255, 93, 155, 97),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(Icons.account_box_rounded, size: 120)
+            Icon(Icons.account_box_rounded, size: 120),
             //Container(color: Colors.blue, width: 100, height: 100,),
-            ,Column(mainAxisAlignment: MainAxisAlignment.center, 
+            Column(mainAxisAlignment: MainAxisAlignment.center, 
             children: [
               Text('Name: $editName'),
               Text('Gender: $editGen'),
@@ -45,6 +50,8 @@ class ProfilePage extends StatelessWidget {
         ]
       ),
       drawer: Drawer(
+        shadowColor: Colors.white.withOpacity(0),
+
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -66,13 +73,6 @@ class ProfilePage extends StatelessWidget {
               title: Text('Log Out'), 
               //Logg ut
             ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('To Home Page'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-              },
-            )
           ],
         ),
       ),

@@ -3,7 +3,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:agri_fit/screens/profilePage.dart';
-import 'package:agri_fit/screens/EditProfilePage.dart';
 import 'package:agri_fit/screens/mapPage.dart';
 
 class NavBar extends StatefulWidget {

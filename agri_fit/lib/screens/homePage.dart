@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         title: Text('AgriFit', textScaleFactor: 1.5,),
         foregroundColor: Color.fromARGB(255, 93, 155, 97),
       ),
-      body: Column(
+      body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 15, left: 17, right: 17),

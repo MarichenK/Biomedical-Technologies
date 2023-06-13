@@ -31,3 +31,10 @@ flutter:
 
   assets:
     - assets/map_image.jpg
+    - assets/logos/ali.png
+    - assets/logos/conad.png
+    - assets/logos/eurospin.png
+    - assets/logos/iperrosetto.png
+    - assets/logos/lidl.png
+    - assets/logos/pam.png
+    - assets/logos/spar.jpeg

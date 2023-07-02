@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -11,7 +13,8 @@ class LoginPage extends StatefulWidget {
   static const route = '/login/';
   static const routename = 'LoginPage';
 
-  @override _LoginState createState() => _LoginState();
+  @override 
+  State<LoginPage> createState() => _LoginState();
 }
 
 class _LoginState extends State<LoginPage>{
@@ -24,10 +27,9 @@ class _LoginState extends State<LoginPage>{
 
   @override
   Widget build(BuildContext context) {
-    print('${LoginPage.routename} built');
     return Scaffold(
       appBar: AppBar(
-        title: Text(LoginPage.routename),
+        title: const Text(LoginPage.routename),
       ),
       body: Padding(padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -60,8 +62,8 @@ class _LoginState extends State<LoginPage>{
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
                 },
-                child: Text('Ping IMPACT')),
-            SizedBox(
+                child: const Text('Ping IMPACT')),
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
@@ -74,8 +76,8 @@ class _LoginState extends State<LoginPage>{
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
                 },
-                child: Text('Get tokens')),
-            SizedBox(
+                child: const Text('Get tokens')),
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
@@ -90,15 +92,15 @@ class _LoginState extends State<LoginPage>{
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
                 },
-                child: Text('Print tokens')),
-            SizedBox(
+                child: const Text('Print tokens')),
+            const SizedBox(
               height: 10,
             ),
             ElevatedButton(
                 onPressed: () async {
                   final sp = await SharedPreferences.getInstance();
                   final refresh = sp.getString('refresh');
-                  final message;
+                  final String message;
                   if (refresh == null) {
                     message = 'No stored tokens';
                   } else {
@@ -110,8 +112,8 @@ class _LoginState extends State<LoginPage>{
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(content: Text(message)));
                 },
-                child: Text('Refresh tokens')),
-            SizedBox(
+                child:const  Text('Refresh tokens')),
+            const SizedBox(
               height: 10,
             ),
              ElevatedButton(
@@ -122,9 +124,9 @@ class _LoginState extends State<LoginPage>{
                   ScaffoldMessenger.of(context)
                     ..removeCurrentSnackBar()
                     ..showSnackBar(
-                        SnackBar(content: Text('Tokens have been deleted')));
+                        const SnackBar(content: Text('Tokens have been deleted')));
                 },
-                child: Text('Delete tokens')),
+                child: const Text('Delete tokens')),
           ],
       ),),
       );

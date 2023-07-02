@@ -1,7 +1,9 @@
-import 'package:agri_fit/screens/homePage.dart';
+//import 'package:agri_fit/screens/homePage.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
-import 'package:agri_fit/screens/EditProfilePage.dart';
-import 'package:agri_fit/navigationBar.dart';
+import 'package:agri_fit/screens/edit_profile_page.dart';
+//import 'package:agri_fit/navigationBar.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
@@ -19,20 +21,20 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('${ProfilePage.routename} built');
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
         elevation: 0,
         //title: Text(ProfilePage.routename),
         title: Text('$editName', textScaleFactor: 1.5,),
-        foregroundColor: Color.fromARGB(255, 93, 155, 97),
+        foregroundColor: const Color.fromARGB(255, 93, 155, 97),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Icon(Icons.account_box_rounded, size: 120),
+            const Icon(Icons.account_box_rounded, size: 120),
             //Container(color: Colors.blue, width: 100, height: 100,),
             Column(mainAxisAlignment: MainAxisAlignment.center, 
             children: [
@@ -44,8 +46,8 @@ class ProfilePage extends StatelessWidget {
             ],)
           ],
         ),
-        Text('BMI'),
-        Text('Indicasjon')
+        const Text('BMI'),
+        const Text('Indication')
         
         ]
       ),
@@ -57,10 +59,10 @@ class ProfilePage extends StatelessWidget {
           children: [
             const DrawerHeader(child: Text('Profile Options')),
             ListTile(
-              leading: Icon(Icons.account_circle_rounded),
+              leading: const Icon(Icons.account_circle_rounded),
               title: const Text('Edit Profile'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfilePage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilePage()));
               },
             ),
             const ListTile(

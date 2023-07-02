@@ -7,8 +7,11 @@ import 'package:floor/floor.dart';
 abstract class TodoDao {
 
   //Query #1: SELECT -> this allows to obtain all the entries of the Todo table
-  @Query('SELECT * FROM Todo')
-  Future<List<Todo>> findAllTodos();
+  //@Query('SELECT * FROM Todo')
+  //Future<List<Todo>> findAllTodos();
+
+  @Query('SELECT * FROM Todo WHERE id = id')
+  Future<Todo?> findTodoById(int id);
 
   //Query #2: INSERT -> this allows to add a Todo in the table
   @insert
@@ -18,4 +21,7 @@ abstract class TodoDao {
   @delete
   Future<void> deleteTodo(Todo task);
 
-}//TodoDao
+  @Update(onConflict: OnConflictStrategy.fail)
+  Future<void> updateTodo(Todo todo);
+
+}//TodoDao 

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -42,14 +44,13 @@ class MapPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('${MapPage.routename} built');
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Scaffold(
 
         // Hide appbar
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0.0),
+          preferredSize: const Size.fromHeight(0.0),
           child: AppBar(
             backgroundColor: Colors.grey[50],
             elevation: 0,

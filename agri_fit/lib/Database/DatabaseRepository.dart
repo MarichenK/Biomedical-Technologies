@@ -11,10 +11,15 @@ class DatabaseRepository extends ChangeNotifier{
   DatabaseRepository({required this.database});
 
   //This method wraps the findAllTodos() method of the DAO
-  Future<List<Todo>> findAllTodos() async{
-    final results = await database.todoDao.findAllTodos();
-    return results;
-  }//findAllTodos
+  //Future<List<Todo>> findAllTodos() async{
+    //final results = await database.todoDao.findAllTodos();
+    //return results;
+  //}//findAllTodos
+
+  Future<Todo?> findTodoById(int id) async{
+    final result = await database.todoDao.findTodoById(id);
+    return result;
+  }//find specific dao
 
   //This method wraps the insertTodo() method of the DAO. 
   //Then, it notifies the listeners that something changed.
@@ -29,5 +34,10 @@ class DatabaseRepository extends ChangeNotifier{
     await database.todoDao.deleteTodo(todo);
     notifyListeners();
   }//removeTodo
+
+  Future<void> updateTodo(Todo todo) async{
+    await database.todoDao.updateTodo(todo);
+    notifyListeners();
+  } //update todo 
   
-}//DatabaseRepository
+}//DatabaseRepository 

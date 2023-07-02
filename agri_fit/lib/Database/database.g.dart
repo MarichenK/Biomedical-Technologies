@@ -125,7 +125,7 @@ class _$TodoDao extends TodoDao {
   Future<List<Todo>> findAllTodos() async {
     return _queryAdapter.queryList('SELECT * FROM Todo',
         mapper: (Map<String, Object?> row) =>
-            Todo(row['id'] as int?, row['name'] as String));
+            Todo(row['id'] as int?, row['name'] as String, row['password'] as String));
   }
 
   @override

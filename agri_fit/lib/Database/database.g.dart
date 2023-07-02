@@ -65,7 +65,10 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  TodoDao? _todoDaoInstance;
+  TodoDao? _todoDaoInstance; //the personlia 
+  //also have to make one for calories and steps
+  //CaloriesDao
+  //StepsDao
 
   Future<sqflite.Database> open(
     String path,

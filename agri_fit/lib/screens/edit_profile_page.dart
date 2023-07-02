@@ -1,6 +1,5 @@
 import 'package:agri_fit/screens/profilePage.dart';
 import 'package:flutter/material.dart';
-//import 'package:agri_fit/screens/profilePage.dart';
 
 class EditProfilePage extends StatefulWidget{
   const EditProfilePage({Key? key}) : super(key: key);
@@ -9,7 +8,9 @@ class EditProfilePage extends StatefulWidget{
   static const routename = 'EditProfilePage';
 
   @override
-  _EditPageState createState() => _EditPageState();
+  State<EditProfilePage> createState() {
+    return _EditPageState();
+}
 }
 
 class _EditPageState extends State<EditProfilePage>{
@@ -28,7 +29,6 @@ class _EditPageState extends State<EditProfilePage>{
 
   @override
   Widget build(BuildContext context){
-    print('${EditProfilePage.routename} built');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile Page'),

@@ -1,6 +1,8 @@
 //Here the database is being generated
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: library_private_types_in_public_api
+
 part of 'database.dart';
 
 
@@ -109,6 +111,8 @@ class _$TodoDao extends TodoDao {
         _todoInsertionAdapter = InsertionAdapter(database, 'Todo',
             (Todo item) => <String, Object?>{'id': item.id, 'name': item.name}),
         _todoDeletionAdapter = DeletionAdapter(database, 'Todo', ['id'],
+            (Todo item) => <String, Object?>{'id': item.id, 'name': item.name}),
+        _todoUpdateAdapter = UpdateAdapter(database, 'Todo', ['id'],
             (Todo item) => <String, Object?>{'id': item.id, 'name': item.name});
 
   final sqflite.DatabaseExecutor database;
@@ -117,15 +121,23 @@ class _$TodoDao extends TodoDao {
 
   final QueryAdapter _queryAdapter;
 
+  final UpdateAdapter<Todo> _todoUpdateAdapter;
+
   final InsertionAdapter<Todo> _todoInsertionAdapter;
 
   final DeletionAdapter<Todo> _todoDeletionAdapter;
 
-  @override
-  Future<List<Todo>> findAllTodos() async {
-    return _queryAdapter.queryList('SELECT * FROM Todo',
-        mapper: (Map<String, Object?> row) =>
-            Todo(row['id'] as int?, row['name'] as String, row['password'] as String));
+ 
+    @override
+  Future<Todo?> findTodoById(int id) async {
+    return _queryAdapter.query('SELECT * FROM Patient WHERE patient == ?1',
+        mapper: (Map<String, Object?> row) => Todo(
+            row['id'] as int?,
+            row['name'] as String,
+            row['height'] as int,
+            row['age'] as int,
+            row['weight'] as int),
+        arguments: [Todo]);
   }
 
   @override
@@ -137,4 +149,9 @@ class _$TodoDao extends TodoDao {
   Future<void> deleteTodo(Todo task) async {
     await _todoDeletionAdapter.delete(task);
   }
-}
+
+  @override
+  Future<void> updateTodo(Todo todo) async {
+    await _todoUpdateAdapter.update(todo, OnConflictStrategy.abort);
+  }
+} 

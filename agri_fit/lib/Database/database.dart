@@ -11,4 +11,4 @@ part 'database.g.dart';
 abstract class AppDatabase extends FloorDatabase {
   //Add all the daos as getters here
   TodoDao get todoDao;
-}//AppDatabase
+}//AppDatabase 

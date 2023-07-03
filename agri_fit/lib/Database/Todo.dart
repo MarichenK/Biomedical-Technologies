@@ -14,8 +14,9 @@ class Todo {
   final int? height;
   final int? age;
   final int? weight;
+  final String gender;
 
   //Default constructor
-  Todo(this.id, this.name, this.height, this.age, this.weight);
+  Todo(this.id, this.name, this.height, this.age, this.weight, this.gender);
   
 }//Todo 

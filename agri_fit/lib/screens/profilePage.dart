@@ -3,6 +3,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/edit_profile_page.dart';
+import 'package:agri_fit/Utilities/bmiCalculator.dart';
+import 'dart:math';
+
+import 'package:shared_preferences/shared_preferences.dart';
 //import 'package:agri_fit/navigationBar.dart';
 
 // ignore: must_be_immutable
@@ -14,14 +18,22 @@ class ProfilePage extends StatelessWidget {
   String editHeight;
   String editWeight;
 
+  dynamic calculatedBMI;
+
   ProfilePage({required this.editName, required this.editAge, required this.editGen, required this.editHeight, required this.editWeight});
 
   static const route = '/profile/';
   static const routename = 'Profile';
 
   @override
+
   Widget build(BuildContext context) {
-    
+    double height = 1.70;
+    double weight = 55;
+
+    calculatedBMI = weight/pow(height,2);
+    //calculatedBMI = double.parse(editWeight)/pow(double.parse(editHeight),2);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.grey[50],
@@ -46,7 +58,8 @@ class ProfilePage extends StatelessWidget {
             ],)
           ],
         ),
-        const Text('BMI'),
+        Text('BMI: ${checkBMI(calculatedBMI)}'),
+        Text('$calculatedBMI'),
         const Text('Indication')
         
         ]
@@ -73,6 +86,7 @@ class ProfilePage extends StatelessWidget {
             const ListTile(
               leading: Icon(Icons.logout_outlined),
               title: Text('Log Out'), 
+              onTap: () => _toLoginPage(context),
               //Logg ut
             ),
           ],
@@ -80,5 +94,10 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   } //build
+
+  void _toLoginPage(BuildContext context) async{
+    final sp = await SharedPreferences.getInstance();
+    sp.remove('username');
+  }
 
 } //ProfilePage

@@ -69,7 +69,7 @@ class _$AppDatabase extends AppDatabase {
 
   CaloriesDao? _caloriesDaoInstance;
 
-  StepsDao? _stepsDaoInstances;
+  //StepsDao? _stepsDaoInstances;
   
 
   Future<sqflite.Database> open(
@@ -115,10 +115,10 @@ class _$AppDatabase extends AppDatabase {
     return _caloriesDaoInstance ??= _$CaloriesDao(database, changeListener);
   }
 
-  @override
+  /*@override
   StepsDao get stepsDao {
     return _stepsDaoInstances ??= _$StepsDao(database, changeListener);
-  }
+  }*/
 }//class appDatabase
 
 class _$TodoDao extends TodoDao {
@@ -252,16 +252,16 @@ class _$CaloriesDao extends CaloriesDao{
   }
 } //Class Calores
 
-class _$StepsDao extends StepsDao {
+/*class _$StepsDao extends StepsDao {
   _$StepsDao(
     this.database,
     this.changeListener,
   ) : _queryAdapter = QueryAdapter(database),
       _stepsInsertionAdapter = InsertionAdapter(database, 'Steps', 
       (Steps item) => <String, Object?>{
-        'id': item.id,'step': item.step, 'dateTime': _dateTimeConverter.encode(item.dateTime)}),
+        'dateTime': _dateTimeConverter.encode(item.dateTime)}, 'steps': item.steps),
       _stepsUpdateAdapter = UpdateAdapter(database, 'Steps', ['id'], 
-      (Steps item) => <String, Object?>{'id': item.id, 'cal': item.step, 'dateTime': _dateTimeConverter.encode(item.dateTime)}),
+      (Steps item) => <String, Object?>{'id': item.id, 'steps': item.step, 'dateTime': _dateTimeConverter.encode(item.dateTime)}),
       _stepsDeletionAdapter = DeletionAdapter(database, 'Steps', ['id'], 
       (Steps item) => <String, Object?>{'id': item.id, 'step': item.step, 'dateTime': _dateTimeConverter.encode(item.dateTime)});
 
@@ -320,7 +320,7 @@ class _$StepsDao extends StepsDao {
       arguments: [id]);
   }
 
-} //class StepDao
+} //class StepDao */
 
 // ignore_for_file: unused_element
 final _dateTimeConverter = DateTimeConverter();

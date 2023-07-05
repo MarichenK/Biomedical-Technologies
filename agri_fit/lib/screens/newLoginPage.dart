@@ -24,8 +24,6 @@ class NewLoginPage extends StatefulWidget{
 
 class _NewLoginState extends State<NewLoginPage>{
   
-  final _textControllerStudentID = TextEditingController();
-  final _textControllerName = TextEditingController();
 
   @override
   void initState() {

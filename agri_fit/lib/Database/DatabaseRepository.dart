@@ -28,18 +28,9 @@ class DatabaseRepository extends ChangeNotifier{
     return result;
   }
 
-  Future<List<Steps>> findStepsByDate(int id, DateTime startTime, DateTime endTime) async {
-    final result = await database.stepsDao.findStepsbyDate(id, startTime, endTime);
-    return result;
-  }
 
   Future<List<Calories>> findLastWeekCalories(int id, DateTime time) async{
     final result = await database.caloriesDao.findLastWeekCalories(id);
-    return result;
-  }
-
-  Future<List<Steps>> findLastWeekSteps(int id, DateTime time) async{
-    final result = await database.stepsDao.findLastWeekSteps(id);
     return result;
   }
 
@@ -48,10 +39,22 @@ class DatabaseRepository extends ChangeNotifier{
     return result;
   }
 
+  /*
+
+  Future<List<Steps>> findStepsByDate(int id, DateTime startTime, DateTime endTime) async {
+    final result = await database.stepsDao.findStepsbyDate(id, startTime, endTime);
+    return result;
+  }
+
+   Future<List<Steps>> findLastWeekSteps(int id, DateTime time) async{
+    final result = await database.stepsDao.findLastWeekSteps(id);
+    return result;
+  }
+
   Future<List<Steps>> findAllSteps(int id) async{
     final result = database.stepsDao.findAllSteps(id);
     return result;
-  }
+  } */
 
 
 
@@ -67,10 +70,10 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> insertSteps(Steps steps) async{
+  /*Future<void> insertSteps(Steps steps) async{
     await database.stepsDao.insertSteps(steps);
     notifyListeners();
-  }
+  }*/
 
 
   //This method wraps the deleteTodo() method of the DAO. 
@@ -85,10 +88,10 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> deleteSteps(Steps steps) async{
+  /*Future<void> deleteSteps(Steps steps) async{
     await database.stepsDao.deleteSteps(steps);
     notifyListeners();
-  }
+  }*/
 
   Future<void> updateTodo(Todo todo) async{
     await database.todoDao.updateTodo(todo);
@@ -100,9 +103,9 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }
 
-  Future<void> updateSteps(Steps steps) async{
+  /*Future<void> updateSteps(Steps steps) async{
     await database.stepsDao.updateSteps(steps);
     notifyListeners();
-  }
+  }*/
   
 }//DatabaseRepository 

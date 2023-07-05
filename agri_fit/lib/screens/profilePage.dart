@@ -1,6 +1,7 @@
 //import 'package:agri_fit/screens/homePage.dart';
 // ignore_for_file: file_names
 
+import 'package:agri_fit/screens/newLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/edit_profile_page.dart';
 //import 'package:agri_fit/navigationBar.dart';
@@ -75,6 +76,13 @@ class ProfilePage extends StatelessWidget {
               title: Text('Log Out'), 
               //Logg ut
             ),
+            ListTile(
+              leading: Icon(Icons.headphones),
+              title: Text('Log in page'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const NewLoginPage()));
+              },
+            )
           ],
         ),
       ),

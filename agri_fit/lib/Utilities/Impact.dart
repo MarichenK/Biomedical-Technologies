@@ -8,7 +8,10 @@ class Impact{
   static String deleteUser = 'gate/v1/deactivate/{username}/'; //deletes user
   static String activateUser = 'gate/v1/activate/{username}/'; //activates new user
   static String changePsW = 'gate/v1/change_password/'; //changes password
+  
+  static String stepsEndpoint = 'data/v1/steps/patients/';
+  static String caloriesEndpoint = 'data/v1/calories/patients/';
 
-  static String username = '<YOUR_USERNAME>';
-  static String password = '<YOUR_PASSWORD>';
+  static String userID = '<YOUR_ID>';
+  static String name = '<YOUR_NAME>';
 }

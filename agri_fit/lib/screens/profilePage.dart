@@ -84,7 +84,7 @@ class ProfilePage extends StatelessWidget {
               title: Text('Delete Account'),
               //Slett bruker
             ),
-            const ListTile(
+            ListTile(
               leading: Icon(Icons.logout_outlined),
               title: Text('Log Out'), 
               onTap: () => _toLoginPage(context),

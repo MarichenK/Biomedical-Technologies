@@ -1,3 +1,5 @@
+//import 'dart:ffi';
+
 import 'package:agri_fit/Database/Todo.dart';
 import 'package:floor/floor.dart';
 import 'package:intl/intl.dart';
@@ -25,5 +27,23 @@ class Steps {
   @override
   String toString() {
     return 'Steps(time: $dateTime, value: $step)';
+  }
+}
+
+@entity 
+class Callories {
+
+  final int cals;
+  final DateTime dateTime;
+
+  Callories({required this.cals, required this.dateTime});
+
+  Callories.fromJson(String date, Map<String, dynamic> json) :
+    dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
+    cals = int.parse(json["cals"]);
+
+  @override
+  String toString() {
+    return 'Callories(time: $dateTime, value: $cals)';
   }
 }

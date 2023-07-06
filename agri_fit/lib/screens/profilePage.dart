@@ -2,6 +2,9 @@
 // ignore_for_file: file_names
 
 import 'package:agri_fit/screens/loginPage.dart';
+import 'package:agri_fit/Utilities/Impact.dart';
+import 'package:agri_fit/screens/authenticationIMPACT.dart';
+import 'package:agri_fit/screens/newLoginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/editProfilePage.dart';
 import 'package:agri_fit/Utilities/bmiCalculator.dart';
@@ -89,8 +92,14 @@ class ProfilePage extends StatelessWidget {
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
               },
-              //Logg ut
+
             ),
+            ListTile(
+              title: Text('IMPACT'),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AuthImpact()));
+              },
+            )
           ],
         ),
       ),

@@ -1,9 +1,7 @@
 // ignore_for_file: file_names
 
-import 'package:agri_fit/Utilities/graph/steps_data.dart';
 import 'package:agri_fit/Utilities/graph/steps_graph.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

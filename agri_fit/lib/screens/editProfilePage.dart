@@ -62,12 +62,13 @@ class _EditPageState extends State<EditProfilePage>{
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   color: const Color.fromARGB(255, 250, 250, 250)),
+                
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      createTextField('Name', 'Full name', _textControllerName),
+                      createTextField('Name', 'Your name', _textControllerName),
             
                       const SizedBox(height: 16,),
                       createTextField('Gender', 'Gender (F/M)', _textControllerGen),

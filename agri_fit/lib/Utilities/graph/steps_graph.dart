@@ -1,8 +1,6 @@
 import 'package:agri_fit/Utilities/graph/steps_data.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:agri_fit/screens/homePage.dart';
-import 'dart:math';
 
 class StepsGraph extends StatelessWidget {
   final List monthlySteps;
@@ -34,9 +32,9 @@ class StepsGraph extends StatelessWidget {
     return BarChart(
       BarChartData(
         minY: 0,
-        gridData: FlGridData(show: false),
+        gridData: const FlGridData(show: false),
         borderData: FlBorderData(show: false),
-        titlesData: FlTitlesData(
+        titlesData: const FlTitlesData(
           show: true,
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),

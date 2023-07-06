@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -12,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:agri_fit/screens/authenticationIMPACT.dart';
 import 'package:agri_fit/Utilities/Impact.dart';
 import 'package:dio/dio.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:http/http.dart' as http;
 import 'package:agri_fit/Database/Steps.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +25,7 @@ void test = LineChart(
   //swapAnimationDuration: const Duration(milliseconds: 150), // Optional
   //swapAnimationCurve: Curves.linear, // Optional
 );
+
 
 
 class HomePage extends StatefulWidget {
@@ -146,6 +147,7 @@ class _HomePageState extends State<HomePage> {
                         
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
+
                           children: [
                             Center(child: Row(
                               children: [
@@ -172,6 +174,9 @@ class _HomePageState extends State<HomePage> {
                 child: Text('Authorize the app')),
                   ],
                 ),
+
+                      
+
                                 ),
                             Text('Steps'),
                           ],
@@ -186,6 +191,7 @@ class _HomePageState extends State<HomePage> {
                           color: Color.fromARGB(255, 237, 237, 237)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
+
                           children: [
                             Center(child: Row(
                   children: [
@@ -202,6 +208,9 @@ class _HomePageState extends State<HomePage> {
                   },
               ))]),
                               ),
+
+                         
+
                             Text('Calories'),
                           ],
                         ),
@@ -365,3 +374,4 @@ class _HomePageState extends State<HomePage> {
 
   
   } //HomePage
+

@@ -12,17 +12,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_login/flutter_login.dart';
 
-class NewLoginPage extends StatefulWidget{
-  const NewLoginPage({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget{
+  const LoginPage({Key? key}) : super(key: key);
 
   static const route = '/newLogin/';
   static const routename = 'NewLoginPage';
 
   @override
-  State<NewLoginPage> createState() => _NewLoginState();
+  State<LoginPage> createState() => _NewLoginState();
 }
 
-class _NewLoginState extends State<NewLoginPage>{
+class _NewLoginState extends State<LoginPage>{
   
 
   @override
@@ -61,13 +61,43 @@ class _NewLoginState extends State<NewLoginPage>{
   @override
   Widget build(BuildContext context){
     return FlutterLogin(
-      title: 'Welcome, log in',
+      title: 'AgriFit',
+      userType: LoginUserType.name,
       onLogin: _loginUser,
       onSignup: _signUpUser,
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () async{
         _toHomePage(context);
       },
+      messages: LoginMessages(
+        userHint: 'Username',
+        recoverPasswordDescription: 'Password recovery instructions will be sent to the email associated with this account',
+      ),
+
+      theme: LoginTheme(
+        pageColorDark: const Color.fromARGB(255, 27, 179, 141),
+        pageColorLight: Colors.grey[50],
+        primaryColor: const Color.fromARGB(255, 27, 179, 141),
+
+        cardTheme: CardTheme(
+          elevation: 0,
+          margin: const EdgeInsets.only(top: 12),
+          shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(100.0)),
+        ),
+
+        buttonTheme: const LoginButtonTheme(
+          elevation: 0,
+        ),
+
+        inputTheme: InputDecorationTheme(
+          fillColor: Colors.grey.shade200,
+          filled: true,
+        ),
+
+        
+
+      ),
     );
   }
 

@@ -17,6 +17,16 @@ import 'package:http/http.dart' as http;
 import 'package:agri_fit/Database/Steps.dart';
 import 'package:intl/intl.dart';
 
+
+void test = LineChart(
+  LineChartData(
+    // read about it in the LineChartData section
+  ),
+  //swapAnimationDuration: const Duration(milliseconds: 150), // Optional
+  //swapAnimationCurve: Curves.linear, // Optional
+);
+
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -42,6 +52,169 @@ class _HomePageState extends State<HomePage> {
   10000.0,
   8000.0
 ];
+
+  @override
+  Widget build(BuildContext context) {
+      return Scaffold(
+      /*appBar: AppBar(
+        backgroundColor: Colors.grey[50],
+        elevation: 0,
+        //title: Text(HomePage.routename),
+        title: const Text('AgriFit', textScaleFactor: 1.5,),
+        foregroundColor: Color.fromARGB(255, 27, 179, 141),
+      ),*/
+      // Hide appbar
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(0.0),
+          child: AppBar(
+            backgroundColor: Colors.grey[50],
+            elevation: 0,
+          ),
+        ),
+
+      body: Padding(
+        padding: const EdgeInsets.only(right: 20, left: 20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Summary',
+                      textScaleFactor: 3,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 27, 179, 141))),
+                ),
+
+                IconButton(
+                  iconSize: 50,
+                  color: Colors.grey,
+                  icon: const Icon(Icons.refresh,),
+                  splashRadius: 32,
+                  splashColor: Color.fromARGB(255, 237, 237, 237),
+                  onPressed: () {},
+                )
+              ],
+            ),
+
+            Expanded(
+              child: ListView(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Monthly steps',
+                        textScaleFactor: 2.2,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+            
+                  const SizedBox(height: 16),
+            
+                  SizedBox(
+                    height: 320,
+                    child: Container( 
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey[50]),
+                    child:
+                    StepsGraph(
+                      monthlySteps: monthlySteps,
+                      ),
+                  )),
+            
+                  const SizedBox(height: 36),
+            
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Activity today',
+                        textScaleFactor: 2.2,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+            
+                  const SizedBox(height: 11),
+                    
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container( 
+                        height: 140,
+                        width: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromARGB(255, 27, 179, 141)),
+                        
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(child: Row(
+                              children: [
+                                Center(child: 
+                                  FutureBuilder<List<Steps>?>(
+                                    future: _requestStepsToday(), 
+                                    builder: (BuildContext context, AsyncSnapshot<List<Steps>?> snapshot) {
+                                    print(snapshot);
+                                    if (snapshot.hasData) {
+                                      return Text(snapshot.data!.map((e) => e.step).reduce((a, b) => a + b).toString());
+                                    } else {
+                                      return Text("NO"); }
+                                    },)
+                                ),
+                    
+                    ElevatedButton(onPressed: () async {
+                  final result = await _authorize();
+                  final message =
+                      result == 200 ? 'Request successful' : 'Request failed';
+                  ScaffoldMessenger.of(context)
+                    ..removeCurrentSnackBar()
+                    ..showSnackBar(SnackBar(content: Text(message)));
+                },
+                child: Text('Authorize the app')),
+                  ],
+                ),
+                                ),
+                            Text('Steps'),
+                          ],
+                        ),
+                      ),
+                  
+                      Container( 
+                        height: 140,
+                        width: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromARGB(255, 237, 237, 237)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(child: Row(
+                  children: [
+                    Center(child: 
+                      FutureBuilder<List<Callories>?>(
+                        future: _requestCalsToday(),
+                        builder: (BuildContext context, AsyncSnapshot<List<Callories>?> snapshot) {
+                          print(snapshot);
+                          if (snapshot.hasData) {
+                            return Text(snapshot.data!.map((e) => e.cals).reduce((a, b) => a + b).toString());
+                          } else {
+                            return Text("NO");
+                          }
+                  },
+              ))]),
+                              ),
+                            Text('Calories'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+            ),
+          ],
+        ),
+      ),
+    );
+  } 
 
   Future<List<Steps>?> _requestStepsToday() async {
     //Initialize the result
@@ -93,116 +266,6 @@ class _HomePageState extends State<HomePage> {
     return result;
 
   } //_requestData
-
-
-
-  @override
-  Widget build(BuildContext context) {
-      return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        //title: Text(HomePage.routename),
-        title: const Text('AgriFit', textScaleFactor: 1.5,),
-        foregroundColor: const Color.fromARGB(255, 93, 155, 97),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(left: 17, right: 17),
-        child: ListView(
-          children: [
-            const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Monthly average steps',
-                      textScaleFactor: 1.8,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-            Padding(
-              padding: EdgeInsets.only(top: 1),
-              child: SizedBox(
-                height: 300,
-                child: StepsGraph(
-                  monthlySteps: monthlySteps,
-                  ),
-              )),
-            const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Steps',
-                      textScaleFactor: 1.8,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Container( 
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 237, 237, 237)),
-                child: Row(
-                  children: [
-                    Center(child: 
-                      FutureBuilder<List<Steps>?>(
-                        future: _requestStepsToday(), 
-                        builder: (BuildContext context, AsyncSnapshot<List<Steps>?> snapshot) {
-                          print(snapshot);
-                          if (snapshot.hasData) {
-                            return Text(snapshot.data!.map((e) => e.step).reduce((a, b) => a + b).toString());
-                          } else {
-                          return Text("NO"); }
-                        },)
-                      ),
-                    
-                    ElevatedButton(onPressed: () async {
-                  final result = await _authorize();
-                  final message =
-                      result == 200 ? 'Request successful' : 'Request failed';
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: Text('Authorize the app')),
-                  ],
-                ),
-              )),
-            const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Calories burnt',
-                      textScaleFactor: 1.8,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Container( 
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 237, 237, 237)),
-                child: Row(
-                  children: [
-                    Center(child: 
-                      FutureBuilder<List<Callories>?>(
-                        future: _requestCalsToday(),
-                        builder: (BuildContext context, AsyncSnapshot<List<Callories>?> snapshot) {
-                          print(snapshot);
-                          if (snapshot.hasData) {
-                            return Text(snapshot.data!.map((e) => e.cals).reduce((a, b) => a + b).toString());
-                          } else {
-                            return Text("NO");
-                          }
-                  },
-              ))]),
-            )),
-          ],
-    )));
-  } } //ProfilePage
 
   Future<int> _refreshTokens() async {
 
@@ -300,13 +363,5 @@ class _HomePageState extends State<HomePage> {
 
   } //_requestData
 
-
-   
-
-void test = LineChart(
-  LineChartData(
-    // read about it in the LineChartData section
-  ),
-  //swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-  //swapAnimationCurve: Curves.linear, // Optional
-);
+  
+  } //HomePage

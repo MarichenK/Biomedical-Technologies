@@ -34,87 +34,131 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         backgroundColor: Colors.grey[50],
         elevation: 0,
         //title: Text(HomePage.routename),
         title: const Text('AgriFit', textScaleFactor: 1.5,),
-        foregroundColor: const Color.fromARGB(255, 93, 155, 97),
-      ),
+        foregroundColor: Color.fromARGB(255, 27, 179, 141),
+      ),*/
+      // Hide appbar
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(0.0),
+          child: AppBar(
+            backgroundColor: Colors.grey[50],
+            elevation: 0,
+          ),
+        ),
+
       body: Padding(
-        padding: const EdgeInsets.only(left: 17, right: 17),
-        child: ListView(
+        padding: const EdgeInsets.only(right: 20, left: 20),
+        child: Column(
           children: [
-            const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
-                child: Align(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Monthly average steps',
-                      textScaleFactor: 1.8,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  child: Text('Summary',
+                      textScaleFactor: 3,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 27, 179, 141))),
                 ),
-              ),
-            Padding(
-              padding: EdgeInsets.only(top: 1),
-              child: SizedBox(
-                height: 300,
-                child: StepsGraph(
-                  monthlySteps: monthlySteps,
+
+                IconButton(
+                  iconSize: 50,
+                  color: Colors.grey,
+                  icon: const Icon(Icons.refresh,),
+                  splashRadius: 32,
+                  splashColor: Color.fromARGB(255, 237, 237, 237),
+                  onPressed: () {},
+                )
+              ],
+            ),
+
+            Expanded(
+              child: ListView(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Monthly steps',
+                        textScaleFactor: 2.2,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
-              )),
-            const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Steps',
-                      textScaleFactor: 1.8,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Container( 
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 237, 237, 237)),
-                child: Row(
-                  children: const [
-                    Center(child: Text('12304',
-                      textScaleFactor: 2,
-                      style: TextStyle(fontWeight: FontWeight.bold)),),
-                    Center(child: Text('Steps'),),
-                  ],
-                ),
-              )),
-            const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text('Calories burnt',
-                      textScaleFactor: 1.8,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                ),
-              ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Container( 
-                height: 100,
-                child: const Center(child: Text('Calories'),),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: const Color.fromARGB(255, 237, 237, 237)),
-              )),
-          ]),
+            
+                  const SizedBox(height: 16),
+            
+                  SizedBox(
+                    height: 320,
+                    child: Container( 
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey[50]),
+                    child:
+                    StepsGraph(
+                      monthlySteps: monthlySteps,
+                      ),
+                  )),
+            
+                  const SizedBox(height: 36),
+            
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Activity today',
+                        textScaleFactor: 2.2,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  ),
+            
+                  const SizedBox(height: 11),
+                    
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container( 
+                        height: 140,
+                        width: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromARGB(255, 27, 179, 141)),
+                        
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Center(child: Text('12304',
+                              textScaleFactor: 2.5,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)
+                                ),
+                                ),
+                            Text('Steps'),
+                          ],
+                        ),
+                      ),
+                  
+                      Container( 
+                        height: 140,
+                        width: 190,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromARGB(255, 237, 237, 237)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Center(child: Text('2000',
+                              textScaleFactor: 2.5,
+                              style: TextStyle(fontWeight: FontWeight.bold),),),
+                            Text('Calories'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
+            ),
+          ],
+        ),
       ),
     );
-  } } //ProfilePage
-
-
-void test = LineChart(
-  LineChartData(
-    // read about it in the LineChartData section
-  ),
-  swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-  swapAnimationCurve: Curves.linear, // Optional
-);
+  } } //HomePage

@@ -48,7 +48,7 @@ class StepsGraph extends StatelessWidget {
             x: data.x,
             barRods: [BarChartRodData(
               toY: data.y,
-              color: const Color.fromARGB(255, 93, 155, 97),
+              color: Color.fromARGB(255, 8, 131, 100),
               width: 20,
               borderRadius: BorderRadius.circular(3),
               )

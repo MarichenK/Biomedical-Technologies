@@ -80,7 +80,7 @@ class MapPage extends StatelessWidget {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text('Stores near you',
-                    textScaleFactor: 1.8,
+                    textScaleFactor: 2.2,
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
             ),

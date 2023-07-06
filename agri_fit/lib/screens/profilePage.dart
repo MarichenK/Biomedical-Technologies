@@ -1,9 +1,9 @@
 //import 'package:agri_fit/screens/homePage.dart';
 // ignore_for_file: file_names
 
-import 'package:agri_fit/screens/newLoginPage.dart';
+import 'package:agri_fit/screens/loginPage.dart';
 import 'package:flutter/material.dart';
-import 'package:agri_fit/screens/edit_profile_page.dart';
+import 'package:agri_fit/screens/editProfilePage.dart';
 import 'package:agri_fit/Utilities/bmiCalculator.dart';
 import 'dart:math';
 
@@ -40,15 +40,14 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: Colors.grey[50],
         elevation: 0,
         //title: Text(ProfilePage.routename),
-        title: Text('$editName', textScaleFactor: 1.5,),
-        foregroundColor: const Color.fromARGB(255, 93, 155, 97),
+        title: Text('Hello $editName', textScaleFactor: 1.5,),
+        foregroundColor: const Color.fromARGB(255, 27, 179, 141),
       ),
       body: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Row( mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Icon(Icons.account_box_rounded, size: 120),
-            //Container(color: Colors.blue, width: 100, height: 100,),
+            const Icon(Icons.account_circle_rounded, size: 180),
             Column(mainAxisAlignment: MainAxisAlignment.center, 
             children: [
               Text('Name: $editName'),
@@ -60,7 +59,7 @@ class ProfilePage extends StatelessWidget {
           ],
         ),
         Text('BMI: ${checkBMI(calculatedBMI)}'),
-        Text('$calculatedBMI'),
+        Text(calculatedBMI.toStringAsFixed(2)),
         const Text('Indication')
         
         ]
@@ -87,16 +86,11 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout_outlined),
               title: Text('Log Out'), 
-              onTap: () => _toLoginPage(context),
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+              },
               //Logg ut
             ),
-            ListTile(
-              leading: Icon(Icons.headphones),
-              title: Text('Log in page'),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const NewLoginPage()));
-              },
-            )
           ],
         ),
       ),

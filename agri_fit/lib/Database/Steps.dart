@@ -18,11 +18,13 @@ class Steps {
   final int step;
   final DateTime dateTime;
 
-  Steps({required this.step, required this.dateTime});
+  Steps({required this.dateTime, required this.step});
 
   Steps.fromJson(String date, Map<String, dynamic> json) :
     dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-    step = int.parse(json["step"]);
+    step = int.parse(json["value"]) {
+      print(date);
+    }
 
   @override
   String toString() {
@@ -36,11 +38,11 @@ class Callories {
   final int cals;
   final DateTime dateTime;
 
-  Callories({required this.cals, required this.dateTime});
+  Callories({required this.dateTime, required this.cals});
 
   Callories.fromJson(String date, Map<String, dynamic> json) :
     dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-    cals = int.parse(json["cals"]);
+    cals = int.parse(json["value"]);
 
   @override
   String toString() {

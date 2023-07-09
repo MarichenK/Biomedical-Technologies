@@ -4,12 +4,6 @@ import 'package:agri_fit/Database/Todo.dart';
 import 'package:floor/floor.dart';
 import 'package:intl/intl.dart';
 
-/*@Entity(
-  foreignKeys:[ForeignKey(
-    childColumns: ['name'], 
-    parentColumns: ['id'], 
-    entity: Todo)]
-)*/
 @entity
 class Steps {
   //@PrimaryKey(autoGenerate: true)
@@ -42,10 +36,31 @@ class Callories {
 
   Callories.fromJson(String date, Map<String, dynamic> json) :
     dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-    cals = int.parse(json["value"]);
+    cals = int.parse(json["value"]){
+      print(date);
+    } 
 
   @override
   String toString() {
     return 'Callories(time: $dateTime, value: $cals)';
+  }
+}
+
+@entity
+class StepsWeek {
+  final int step;
+  final DateTime startTime;
+  final DateTime endTime;
+
+  StepsWeek({required this.startTime, required this.endTime, required this.step});
+
+  StepsWeek.fromJson(String date1, String date2, Map<String, dynamic> json) :
+    startTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date1 ${json["date"]}'),
+    endTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date2 ${json["date"]}'),
+    step = int.parse(json["value"]);
+  
+  @override
+  String toString() {
+    return 'Steps per week(start_date: $startTime, endDate: $endTime, value: $step)';
   }
 }

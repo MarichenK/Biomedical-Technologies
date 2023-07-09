@@ -95,7 +95,14 @@ class _HomePageState extends State<HomePage> {
                   icon: const Icon(Icons.refresh,),
                   splashRadius: 32,
                   splashColor: Color.fromARGB(255, 237, 237, 237),
-                  onPressed: () {},
+                  onPressed: () async {
+                    final result = await _authorize();
+                    final message = 
+                      result == 200? 'Request successful' : 'Request failed';
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(SnackBar(content: Text(message)));
+                  },
                 )
               ],
             ),
@@ -145,41 +152,32 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20),
                           color: Color.fromARGB(255, 27, 179, 141)),
                         
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-
-                          children: [
-                            Center(child: Row(
+                        child: 
+                            Center(child: Column (
                               children: [
-                                Center(child: 
+                                SizedBox(height: 40,),
+                                Text('Steps:'),
+                                SizedBox(height: 10,),
+                                 
                                   FutureBuilder<List<Steps>?>(
                                     future: _requestStepsToday(), 
                                     builder: (BuildContext context, AsyncSnapshot<List<Steps>?> snapshot) {
+                                    //print(snapshot);
+                                    if (snapshot.hasData) {
+                                      return Text(snapshot.data!.map((e) => e.step).reduce((a, b) => a + b).toString());
+                                    } else {
+                                      return Text("Cannot collect"); }
+                                    },),
+                                    FutureBuilder<List<StepsWeek>?>(
+                                    future: _requestStepsWeek1(), 
+                                    builder: (BuildContext context, AsyncSnapshot<List<StepsWeek>?> snapshot) {
                                     print(snapshot);
                                     if (snapshot.hasData) {
                                       return Text(snapshot.data!.map((e) => e.step).reduce((a, b) => a + b).toString());
                                     } else {
-                                      return Text("NO"); }
-                                    },)
-                                ),
-                    
-                    ElevatedButton(onPressed: () async {
-                  final result = await _authorize();
-                  final message =
-                      result == 200 ? 'Request successful' : 'Request failed';
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: Text('Authorize the app')),
-                  ],
-                ),
-
-                      
-
-                                ),
-                            Text('Steps'),
-                          ],
+                                      return Text("Cannot collect"); }
+                                    },)    
+                          ],)
                         ),
                       ),
                   
@@ -189,13 +187,11 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Color.fromARGB(255, 237, 237, 237)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-
+                        child:Center(child: Column(
                           children: [
-                            Center(child: Row(
-                  children: [
-                    Center(child: 
+                            SizedBox(height: 40,),
+                            Text('Calories'),
+                            SizedBox(height: 10,),
                       FutureBuilder<List<Callories>?>(
                         future: _requestCalsToday(),
                         builder: (BuildContext context, AsyncSnapshot<List<Callories>?> snapshot) {
@@ -203,26 +199,20 @@ class _HomePageState extends State<HomePage> {
                           if (snapshot.hasData) {
                             return Text(snapshot.data!.map((e) => e.cals).reduce((a, b) => a + b).toString());
                           } else {
-                            return Text("NO");
+                            return Text("Cannot collect");
                           }
                   },
-              ))]),
+              ),]),
                               ),
-
-                         
-
-                            Text('Calories'),
-                          ],
-                        ),
-                      ),
+                  )
                     ],
                   ),
                 ]),
             ),
-          ],
-        ),
-      ),
-    );
+          ]))
+        );
+      
+    
   } 
 
   Future<List<Steps>?> _requestStepsToday() async {
@@ -249,7 +239,7 @@ class _HomePageState extends State<HomePage> {
     }//if
 
     //Create the (representative) request
-    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 1)));
+    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 4)));
     final url = Impact.baseUrl + Impact.stepsEndpoint + Impact.patientUsername + '/day/$currentDate/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
@@ -275,6 +265,67 @@ class _HomePageState extends State<HomePage> {
     return result;
 
   } //_requestData
+
+  Future<List<StepsWeek>?> _requestStepsWeek1() async{
+    List<StepsWeek>? result;
+
+    String? access;
+
+    final sp = await SharedPreferences.getInstance();
+    access = sp.getString('access');
+
+    //easier to see where the eventual error is
+    if (access == null) {
+      return [
+        StepsWeek(startTime: DateTime.now(), endTime: DateTime.now(), step: 0),
+      ];
+    }
+
+    if (JwtDecoder.isExpired(access)){
+      await _refreshTokens();
+      access = sp.getString('access');
+    }
+
+    final String startDate = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 8)));
+    final String endDate = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 4)));
+    final url = Impact.baseUrl + Impact.stepsEndpoint + Impact.patientUsername + '/daterange/start_date/$startDate/end_date/$endDate/';
+    final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
+    print('Calling: $url');
+    final response = await http.get(Uri.parse(url), headers: headers);
+
+    if (response.statusCode == 200) {
+      final decodedResponse = jsonDecode(response.body);
+      result = [];
+      print(decodedResponse['data'].length);
+      print(decodedResponse[0]['date'][0]);
+      //spør Roro
+      //antall dataset: 5
+      //innenfor hvert sett er det mange datoer og verdier
+      print('Hello Clara');
+      for (var i = 0; i < decodedResponse['data'].length; i++){ //i fra 0 til 4
+        String sDate = decodedResponse[0]['date'];
+        String eDate = decodedResponse[-1]['date'];
+        print(sDate);
+        for (var j = 0; j < decodedResponse['data'][i].length; j++){
+          //String sDate = decodedResponse['data'][i]['date'];
+          //String eDate = decodedResponse['data'][i]['date'];
+          //print(decodedResponse['data']['date']);
+          Map<String, dynamic> json = decodedResponse['data'][i][j]['data'];
+          result.add(StepsWeek.fromJson(sDate, eDate, json));
+        }
+      }
+      //data:
+        //date
+        //data
+          //values
+    } else {
+      result = null;
+    }
+
+    return result;
+
+  }
 
   Future<int> _refreshTokens() async {
 
@@ -345,7 +396,7 @@ class _HomePageState extends State<HomePage> {
     }//if
 
     //Create the (representative) request
-    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 1)));
+    final String currentDate = DateFormat('yyyy-MM-dd').format(DateTime.now().subtract(Duration(days: 6)));
     final url = Impact.baseUrl + Impact.caloriesEndpoint + Impact.patientUsername + '/day/$currentDate/';
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 

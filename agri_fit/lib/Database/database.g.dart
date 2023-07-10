@@ -67,9 +67,7 @@ class _$AppDatabase extends AppDatabase {
 
   TodoDao? _todoDaoInstance; //the personlia 
 
-  //CaloriesDao? _caloriesDaoInstance;
 
-  //StepsDao? _stepsDaoInstances;
   
 
   Future<sqflite.Database> open(
@@ -95,10 +93,7 @@ class _$AppDatabase extends AppDatabase {
       onCreate: (database, version) async {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `Todo` (`name` TEXT PRIMARY KEY, `password` TEXT NOT NULL, `height` INTEGER NOT NULL, `age` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `gender` TEXT NOT NULL)');
-        // await database.execute(
-        //     'CREATE TABLE IF NOT EXISTS `Calories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `cal` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, FOREIGN KEY (`name`) REFERENCES `Todo` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
-        // await database.execute(
-            // 'CREATE TABLE IF NOT EXISTS `Steps` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `step` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, FOREIGN KEY (`name`) REFERENCES `Todo` (`id`) ON UPDATE NO ACTION IN DELETE NO ACTION)');
+         
         await callback?.onCreate?.call(database, version);
       },
     );
@@ -110,15 +105,6 @@ class _$AppDatabase extends AppDatabase {
     return _todoDaoInstance ??= _$TodoDao(database, changeListener);
   }
 
-  // @override
-  // CaloriesDao get caloriesDao {
-  //   return _caloriesDaoInstance ??= _$CaloriesDao(database, changeListener);
-  // }
-
-  /*@override
-  StepsDao get stepsDao {
-    return _stepsDaoInstances ??= _$StepsDao(database, changeListener);
-  }*/
 }//class appDatabase
 
 class _$TodoDao extends TodoDao {
@@ -176,152 +162,6 @@ class _$TodoDao extends TodoDao {
   }
 }//class Todo
 
-class _$CaloriesDao extends CaloriesDao{
-  _$CaloriesDao(
-    this.database,
-    this.changeListener,
-  )
-  : _queryAdapter = QueryAdapter(database),
-    _calorieInsertionAdapter = InsertionAdapter(
-      database, 
-      'Calories', 
-      (Calories item) => <String, Object?>{ 
-        'id': item.id, 
-        'cal': item.cal, 
-        'dateTime' : _dateTimeConverter.encode(item.dateTime)}),
-    _calorieUpdateAdapter = UpdateAdapter(database, 'Calories', ['id'], 
-      (Calories item) => <String, Object?>{ 'id': item.id, 'cal': item.cal, 'dateTime': _dateTimeConverter.encode(item.dateTime)}),
-    _calorieDeletionAdapter = DeletionAdapter(database, 'Calories', ['id'], 
-      (Calories item) => <String, Object?>{'id': item.id, 'cal': item.cal, 'dateTime': _dateTimeConverter.encode(item.dateTime)
-    });
-  
-  final sqflite.DatabaseExecutor database;
-  final StreamController<String> changeListener;
-  final QueryAdapter _queryAdapter;
-  final InsertionAdapter<Calories> _calorieInsertionAdapter;
-  final UpdateAdapter<Calories> _calorieUpdateAdapter;
-  final DeletionAdapter<Calories> _calorieDeletionAdapter;
-
-  @override
-  Future<List<Calories>> findCaloriesbyDate(
-    int id,
-    DateTime startTime,
-    DateTime endTime,
-  ) async {
-    return _queryAdapter.queryList(
-      'SELECT * FROM Calories WHERE dateTime between ?2 and ?3 and id == ?1 ORDER BY dateTime ASC', 
-      mapper: (Map<String, Object?> row) => Calories(
-        id: row['id'] as int?, cal: row['cal'] as int, dateTime: _dateTimeConverter.decode(row['dateTime'] as int)),
-      arguments: [
-        id, _dateTimeConverter.encode(startTime), _dateTimeConverter.encode(endTime)
-      ]
-      );
-  }
-
-  @override
-  Future<List<Calories>> findAllCalories(int id) async{
-    return _queryAdapter.queryList(
-      'SELECT * FROM Calories WHERE id == ?1', 
-      mapper: (Map<String, Object?> row) => Calories(
-        id: row['id'] as int?, cal: row['cal'] as int, dateTime: _dateTimeConverter.decode(row['dateTime'] as int)),
-      arguments: [id]
-    );
-  }
-
-  @override
-  Future<List<Calories>> findLastWeekCalories(int id) async{
-    return _queryAdapter.queryList(
-      'SELECT * FROM Calories WHERE id == ?1 and dateTime>?2 ORDER BY dateTime ASC', 
-      mapper: (Map<String, Object?> row) => Calories(
-        id: row['id'] as int?, cal: row['cal'] as int, dateTime: _dateTimeConverter.decode(row['dateTime'] as int)),
-      arguments: [id]);
-  }
-
-  @override
-  Future<void> insertCalories(Calories calories) async{
-    await _calorieInsertionAdapter.insert(calories, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> updateCalories(Calories calories) async{
-    await _calorieUpdateAdapter.update(calories, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> deleteCalories(Calories calories) async{
-    await _calorieDeletionAdapter.delete(calories);
-  }
-} //Class Calores
-
-/*class _$StepsDao extends StepsDao {
-  _$StepsDao(
-    this.database,
-    this.changeListener,
-  ) : _queryAdapter = QueryAdapter(database),
-      _stepsInsertionAdapter = InsertionAdapter(database, 'Steps', 
-      (Steps item) => <String, Object?>{
-        'dateTime': _dateTimeConverter.encode(item.dateTime)}, 'steps': item.steps),
-      _stepsUpdateAdapter = UpdateAdapter(database, 'Steps', ['id'], 
-      (Steps item) => <String, Object?>{'id': item.id, 'steps': item.step, 'dateTime': _dateTimeConverter.encode(item.dateTime)}),
-      _stepsDeletionAdapter = DeletionAdapter(database, 'Steps', ['id'], 
-      (Steps item) => <String, Object?>{'id': item.id, 'step': item.step, 'dateTime': _dateTimeConverter.encode(item.dateTime)});
-
-  final sqflite.DatabaseExecutor database;
-  final StreamController<String> changeListener;
-  final QueryAdapter _queryAdapter;
-  final InsertionAdapter<Steps> _stepsInsertionAdapter;
-  final UpdateAdapter<Steps> _stepsUpdateAdapter;
-  final DeletionAdapter<Steps> _stepsDeletionAdapter;
-
-  @override
-  Future<void> insertSteps(Steps steps) async{
-    await _stepsInsertionAdapter.insert(steps, OnConflictStrategy.abort);
-  }
-
-  @override
-  Future<void> updateSteps(Steps steps) async{
-    await _stepsUpdateAdapter.update(steps, OnConflictStrategy.fail);
-  }
-
-  @override
-  Future<void> deleteSteps(Steps steps) async{
-    await _stepsDeletionAdapter.delete(steps);
-  }
-
-  @override
-  Future<List<Steps>> findStepsbyDate(
-    int id,
-    DateTime startTime,
-    DateTime endTime,
-  ) async {
-    return _queryAdapter.queryList(
-      'SELECT * FROM Steps WHERE dateTime between ?2 and ?3 and id == ?1 ORDER BY dateTime ASC', 
-      mapper: (Map<String, Object?> row) => Steps(id: row['id'] as int?, step: row['step'] as int, dateTime: _dateTimeConverter.decode(row['dateTime'] as int)),
-      arguments: [
-        id, _dateTimeConverter.encode(startTime), _dateTimeConverter.encode(endTime)
-      ]
-      );
-  }
-
-  @override
-  Future<List<Steps>> findAllSteps(int id) async{
-    return _queryAdapter.queryList(
-      'SELECT * FROM Steps WHERE id == ?1', 
-      mapper: (Map<String, Object?> row) => Steps(
-        id: row['id'] as int?, step: row['step'] as int, dateTime: _dateTimeConverter.decode(row['dateTime'] as int)),
-        arguments: [id]
-    );
-  }
-
-  @override
-  Future<List<Steps>> findLastWeekSteps(int id) async{
-    return _queryAdapter.queryList(
-      'SELECT * FROM Steps WHERE id == ?1 and dateTime>?2 ORDER BY dateTime ASC', 
-      mapper: (Map<String, Object?> row) => Steps(id: row['id'] as int?, step: row['step'] as int, dateTime: _dateTimeConverter.decode(row['dateTime'] as int)),
-      arguments: [id]);
-  }
-
-} //class StepDao */
 
 // ignore_for_file: unused_element
 final _dateTimeConverter = DateTimeConverter();

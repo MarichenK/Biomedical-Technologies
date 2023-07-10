@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
-import 'dart:convert';
-import 'dart:io';
+
 
 import 'package:agri_fit/Database/DatabaseRepository.dart';
 import 'package:agri_fit/Database/database.dart';
@@ -9,14 +8,12 @@ import 'package:agri_fit/navigationBar.dart';
 import 'package:agri_fit/screens/editProfilePage.dart';
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:flutter/material.dart';
-import 'package:agri_fit/Utilities/Impact.dart';
-import 'package:agri_fit/Database/Steps.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
+
 import 'package:flutter_login/flutter_login.dart';
 import 'package:agri_fit/Database/Todo.dart';
-import 'package:agri_fit/Database/Daos/TodoDao.dart';
+
 
 class LoginPage extends StatefulWidget{
   const LoginPage({Key? key}) : super(key: key);
@@ -32,7 +29,7 @@ class _NewLoginState extends State<LoginPage>{
   late final DatabaseRepository repository;
   final TextEditingController userController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
+
   
 
   @override

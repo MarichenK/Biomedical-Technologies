@@ -2,7 +2,7 @@
 // ignore_for_file: file_names
 
 import 'package:agri_fit/screens/loginPage.dart';
-import 'package:agri_fit/Utilities/Impact.dart';
+
 import 'package:agri_fit/screens/authenticationIMPACT.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/screens/editProfilePage.dart';
@@ -48,7 +48,7 @@ class ProfilePageState extends State<ProfilePage> {
       final username = sp.getString("username");
 
       if (username == null) return;
-      final todo = await repository.findTodoById(username!);
+      final todo = await repository.findTodoById(username);
       if (todo == null) return;
 
       setState(() {

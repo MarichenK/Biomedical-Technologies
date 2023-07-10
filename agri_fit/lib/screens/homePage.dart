@@ -3,15 +3,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:agri_fit/Utilities/graph/steps_data.dart';
 import 'package:agri_fit/Utilities/graph/steps_graph.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
+
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:agri_fit/screens/authenticationIMPACT.dart';
+
 import 'package:agri_fit/Utilities/Impact.dart';
-import 'package:dio/dio.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:agri_fit/Database/Steps.dart';
 import 'package:intl/intl.dart';

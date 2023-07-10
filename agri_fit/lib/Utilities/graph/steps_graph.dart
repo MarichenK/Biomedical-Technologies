@@ -3,37 +3,38 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class StepsGraph extends StatelessWidget {
-  final List monthlySteps;
+  final List weeklySteps;
 
   const StepsGraph({
     super.key,
-    required this.monthlySteps,
+    required this.weeklySteps,
   });
 
   @override
   Widget build(BuildContext context) {
     // initialize bar data
     BarData myBarData = BarData(
-      janMean: monthlySteps[0], 
-      febMean: monthlySteps[1], 
-      marMean: monthlySteps[2], 
-      aprMean: monthlySteps[3], 
-      mayMean: monthlySteps[4], 
-      junMean: monthlySteps[5], 
-      julMean: monthlySteps[6], 
-      augMean: monthlySteps[7], 
-      sepMean: monthlySteps[8], 
-      octMean: monthlySteps[9], 
-      novMean: monthlySteps[10], 
-      desMean: monthlySteps[11],
+      minusThreeWeeks: weeklySteps[0], 
+      minusTwoWeeks: weeklySteps[1], 
+      lastWeek: weeklySteps[2], 
+      thisWeek: weeklySteps[3], 
       );
       myBarData.initializeBarData(); 
     
     return BarChart(
+      // layout changes to BarChart
       BarChartData(
         minY: 0,
         gridData: const FlGridData(show: false),
         borderData: FlBorderData(show: false),
+
+        barTouchData: BarTouchData(
+          enabled: true,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipRoundedRadius: 40,
+            tooltipBgColor:const Color.fromARGB(255, 237, 237, 237),) 
+        ),
+
         titlesData: const FlTitlesData(
           show: true,
           topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -41,17 +42,17 @@ class StepsGraph extends StatelessWidget {
           leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
           bottomTitles: AxisTitles(sideTitles: SideTitles(showTitles: true, getTitlesWidget: bottomTitles))
         ),
+
         barGroups: myBarData.barData.map(
           (data) => BarChartGroupData(
             x: data.x,
             barRods: [BarChartRodData(
               toY: data.y,
-              color: Color.fromARGB(255, 8, 131, 100),
-              width: 20,
-              borderRadius: BorderRadius.circular(3),
+              color: const Color.fromARGB(255, 8, 131, 100),
+              width: 25,
+              borderRadius: const BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5))
               )
               ],
-            
             ),
             ).toList(),
         ),
@@ -68,44 +69,20 @@ Widget bottomTitles(double value, TitleMeta meta){
   Widget text;
   switch (value.toInt()) {
     case 1:
-      text = const Text('Jan', style: style);
+      text = const Text('-3 weeks', style: style);
       break;
     case 2:
-      text = const Text('Feb', style: style);
+      text = const Text('-2 weeks', style: style);
       break;
     case 3:
-      text = const Text('Mar', style: style);
+      text = const Text('Last week', style: style);
       break;
     case 4:
-      text = const Text('Apr', style: style);
-      break;
-    case 5:
-      text = const Text('May', style: style);
-      break;
-    case 6:
-      text = const Text('Jun', style: style);
-      break;
-    case 7:
-      text = const Text('Jul', style: style);
-      break;
-    case 8:
-      text = const Text('Aug', style: style);
-      break;
-    case 9:
-      text = const Text('Sep', style: style);
-      break;
-    case 10:
-      text = const Text('Oct', style: style);
-      break;
-    case 11:
-      text = const Text('Nov', style: style);
-      break;
-    case 12:
-      text = const Text('Dec', style: style);
+      text = const Text('This week', style: style);
       break;
     default:
       text = const Text('', style: style);
     break;
   }
-  return SideTitleWidget(child: text, axisSide: meta.axisSide);
+  return SideTitleWidget(axisSide: meta.axisSide, child: text);
 }

@@ -1,11 +1,16 @@
+import 'package:agri_fit/Database/Todo.dart';
 import 'package:agri_fit/screens/profilePage.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfilePage extends StatefulWidget{
-  const EditProfilePage({Key? key}) : super(key: key);
+  const EditProfilePage({Key? key, String? this.username, String? this.password}) : super(key: key);
 
   static const route = '/editprofile/';
   static const routename = 'EditProfilePage';
+
+  final String? username;
+  final String? password;
 
   @override
   State<EditProfilePage> createState() {
@@ -26,6 +31,20 @@ class _EditPageState extends State<EditProfilePage>{
   String editAge = '';
   String editHeight = '';
   String editWeight = '';
+
+  String? username;
+  String? password;
+
+  @override
+  void initState() {
+    super.initState();
+    this.username = widget.username;
+    this.password = widget.password;
+
+    if (username != null) {
+      _textControllerName.text = username!;
+    }
+  }
 
   @override
   Widget build(BuildContext context){
@@ -92,15 +111,29 @@ class _EditPageState extends State<EditProfilePage>{
                           shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(40))),
                         ),
                         
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.pop(context);
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => ProfilePage(editName : editName, editGen: editGen, editAge: editAge, editHeight: editHeight, editWeight: editWeight)));
-                            _setText();
-                            _setAge();
-                            _setGen();
-                            _setHeight();
-                            _setWeight();
+
+                          _setText();
+                          _setAge();
+                          _setGen();
+                          _setHeight();
+                          _setWeight();
+
+                          if (username != null && password != null) {
+                            // pop with return value doesnt work so we do it this way
+                            final sp = await SharedPreferences.getInstance();
+                            sp.setString("pp_username", username!);
+                            sp.setString("pp_password", password!);
+                            sp.setInt("pp_height", int.parse(editHeight));
+                            sp.setInt("pp_age", int.parse(editAge));
+                            sp.setInt("pp_weight", int.parse(editWeight));
+                            sp.setString("pp_gen", editGen);
+                            Navigator.pop(context);
+                          } else {
+                            Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => ProfilePage()));
+                          }
                           }, 
                         child: const Text('Save Changes')),
                     ],),

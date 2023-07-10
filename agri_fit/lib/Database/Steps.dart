@@ -29,14 +29,14 @@ class Steps {
 @entity 
 class Callories {
 
-  final int cals;
+  final double cals;
   final DateTime dateTime;
 
   Callories({required this.dateTime, required this.cals});
 
   Callories.fromJson(String date, Map<String, dynamic> json) :
     dateTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date ${json["time"]}'),
-    cals = int.parse(json["value"]){
+    cals = double.parse(json["value"]){
       print(date);
     } 
 
@@ -55,8 +55,8 @@ class StepsWeek {
   StepsWeek({required this.startTime, required this.endTime, required this.step});
 
   StepsWeek.fromJson(String date1, String date2, Map<String, dynamic> json) :
-    startTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date1 ${json["date"]}'),
-    endTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date2 ${json["date"]}'),
+    startTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date1 ${json["time"]}'),
+    endTime = DateFormat('yyyy-MM-dd HH:mm:ss').parse('$date2 ${json["time"]}'),
     step = int.parse(json["value"]);
   
   @override

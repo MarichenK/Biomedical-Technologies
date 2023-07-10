@@ -67,7 +67,7 @@ class _$AppDatabase extends AppDatabase {
 
   TodoDao? _todoDaoInstance; //the personlia 
 
-  CaloriesDao? _caloriesDaoInstance;
+  //CaloriesDao? _caloriesDaoInstance;
 
   //StepsDao? _stepsDaoInstances;
   
@@ -94,11 +94,11 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Todo` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT NOT NULL, `height` INTEGER NOT NULL, `age` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `gender` TEXT NOT NULL)');
-        await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Calories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `cal` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, FOREIGN KEY (`name`) REFERENCES `Todo` (`id`) ON UPDATE NO ACTION IN DELETE NO ACTION)');
-        await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Steps` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `step` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, FOREIGN KEY (`name`) REFERENCES `Todo` (`id`) ON UPDATE NO ACTION IN DELETE NO ACTION)');
+            'CREATE TABLE IF NOT EXISTS `Todo` (`name` TEXT PRIMARY KEY, `password` TEXT NOT NULL, `height` INTEGER NOT NULL, `age` INTEGER NOT NULL, `weight` INTEGER NOT NULL, `gender` TEXT NOT NULL)');
+        // await database.execute(
+        //     'CREATE TABLE IF NOT EXISTS `Calories` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `cal` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, FOREIGN KEY (`name`) REFERENCES `Todo` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION)');
+        // await database.execute(
+            // 'CREATE TABLE IF NOT EXISTS `Steps` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `step` INTEGER NOT NULL, `dateTime` INTEGER NOT NULL, FOREIGN KEY (`name`) REFERENCES `Todo` (`id`) ON UPDATE NO ACTION IN DELETE NO ACTION)');
         await callback?.onCreate?.call(database, version);
       },
     );
@@ -110,10 +110,10 @@ class _$AppDatabase extends AppDatabase {
     return _todoDaoInstance ??= _$TodoDao(database, changeListener);
   }
 
-  @override
-  CaloriesDao get caloriesDao {
-    return _caloriesDaoInstance ??= _$CaloriesDao(database, changeListener);
-  }
+  // @override
+  // CaloriesDao get caloriesDao {
+  //   return _caloriesDaoInstance ??= _$CaloriesDao(database, changeListener);
+  // }
 
   /*@override
   StepsDao get stepsDao {
@@ -127,11 +127,11 @@ class _$TodoDao extends TodoDao {
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
         _todoInsertionAdapter = InsertionAdapter(database, 'Todo',
-            (Todo item) => <String, Object?>{'id': item.id, 'name': item.name}),
+            (Todo item) => <String, Object?>{'name': item.username, 'password': item.password, 'height': item.height, 'age': item.age, 'weight': item.weight, 'gender': item.gender}),
         _todoDeletionAdapter = DeletionAdapter(database, 'Todo', ['id'],
-            (Todo item) => <String, Object?>{'id': item.id, 'name': item.name}),
+            (Todo item) => <String, Object?>{'id': item.username, 'name': item.password}),
         _todoUpdateAdapter = UpdateAdapter(database, 'Todo', ['id'],
-            (Todo item) => <String, Object?>{'id': item.id, 'name': item.name});
+            (Todo item) => <String, Object?>{'id': item.username, 'name': item.password});
 
   final sqflite.DatabaseExecutor database;
 
@@ -147,17 +147,18 @@ class _$TodoDao extends TodoDao {
 
  
     @override
-  Future<Todo?> findTodoById(int id) async {
-    return _queryAdapter.query('SELECT * FROM Patient WHERE patient == ?1',
+  Future<Todo?> findTodoById(String username) {
+    return _queryAdapter.query('SELECT * FROM Todo WHERE name == ?1',
         mapper: (Map<String, Object?> row) => Todo(
-            row['id'] as int?,
             row['name'] as String,
+            row['password'] as String,
             row['height'] as int,
             row['age'] as int,
             row['weight'] as int,
             row['gender'] as String),
-        arguments: [Todo]);
+        arguments: [username]);
   }
+  
 
   @override
   Future<void> insertTodo(Todo todo) async {

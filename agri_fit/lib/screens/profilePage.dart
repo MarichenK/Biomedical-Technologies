@@ -10,34 +10,63 @@ import 'package:agri_fit/Utilities/bmiCalculator.dart';
 import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Database/DatabaseRepository.dart';
+import '../Database/database.dart';
 //import 'package:agri_fit/navigationBar.dart';
 
 // ignore: must_be_immutable
-class ProfilePage extends StatelessWidget {
-  //const ProfilePage({Key? key}) : super(key: key);
-  String editName;
-  String editAge;
-  String editGen;
-  String editHeight;
-  String editWeight;
-
-  dynamic calculatedBMI;
-
-  ProfilePage({required this.editName, required this.editAge, required this.editGen, required this.editHeight, required this.editWeight});
+class ProfilePage extends StatefulWidget {
+  ProfilePage({Key? key}) : super(key: key);
 
   static const route = '/profile/';
   static const routename = 'Profile';
 
   @override
+  State<ProfilePage> createState() => ProfilePageState();
+} //ProfilePage
 
+class ProfilePageState extends State<ProfilePage> {
+  //const ProfilePage({Key? key}) : super(key: key);
+
+  late final DatabaseRepository repository;
+  double calculatedBMI = 0;
+  String editName = '';
+  String editAge = '';
+  String editGen = '';
+  String editHeight = '';
+  String editWeight = '';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    $FloorAppDatabase.databaseBuilder("app_database").build().then((value) async {
+      repository = DatabaseRepository(database: value);
+      final sp = await SharedPreferences.getInstance();
+      final username = sp.getString("username");
+
+      if (username == null) return;
+      final todo = await repository.findTodoById(username!);
+      if (todo == null) return;
+
+      setState(() {
+        editAge = todo.age.toString();
+        editGen = todo.gender.toString();
+        editHeight = todo.height.toString();
+        editWeight = todo.weight.toString();
+
+        if (todo.weight != null && todo.height != null) {
+          calculatedBMI = todo.weight! / pow(todo.height!, 2);
+        }
+      });
+
+    });
+  }
+  
+  @override
   Widget build(BuildContext context) {
-    // calculating BMI
-    double height = 1.70;
-    double weight = 70;
-
-    calculatedBMI = weight/pow(height,2);
-    //calculatedBMI = double.parse(editWeight)/pow(double.parse(editHeight),2);
-
     return Scaffold(
       extendBodyBehindAppBar: true,
 
@@ -86,12 +115,12 @@ class ProfilePage extends StatelessWidget {
                           textScaleFactor: 2.2,
                                 style: const TextStyle(fontWeight: FontWeight.bold)),
                 
-                        Text('$editGen, $editAge years', textScaleFactor: 1.2,),
+                        Text('${editGen}, ${editAge} years', textScaleFactor: 1.2,),
                     
                         const SizedBox(height: 26),
                 
-                        Text('Height: $editHeight cm', textScaleFactor: 1.2,),
-                        Text('Weight: $editWeight kg', textScaleFactor: 1.2,)
+                        Text('Height: ${editHeight} cm', textScaleFactor: 1.2,),
+                        Text('Weight: ${editWeight} kg', textScaleFactor: 1.2,)
                       ],)
                     ],
                   ),
@@ -188,10 +217,11 @@ class ProfilePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout_outlined),
               title: Text('Log Out'), 
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+              onTap: () async {
+                final sp = await SharedPreferences.getInstance();
+                sp.remove("username");
+                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
               },
-
             ),
             ListTile(
               title: Text('IMPACT'),
@@ -209,5 +239,4 @@ class ProfilePage extends StatelessWidget {
     final sp = await SharedPreferences.getInstance();
     sp.remove('username');
   }
-
-} //ProfilePage
+}

@@ -1,3 +1,4 @@
+import 'package:agri_fit/screens/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/navigationBar.dart';
 
@@ -11,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //This specifies the app entrypoint.
-      home: NavBar(),
+      home: LoginPage(),
     );
   } //build
 }//MyApp

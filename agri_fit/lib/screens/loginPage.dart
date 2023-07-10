@@ -3,6 +3,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:agri_fit/Database/DatabaseRepository.dart';
+import 'package:agri_fit/Database/database.dart';
+import 'package:agri_fit/navigationBar.dart';
+import 'package:agri_fit/screens/editProfilePage.dart';
 import 'package:agri_fit/screens/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:agri_fit/Utilities/Impact.dart';
@@ -11,6 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:agri_fit/Database/Todo.dart';
+import 'package:agri_fit/Database/Daos/TodoDao.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({Key? key}) : super(key: key);
@@ -23,13 +29,25 @@ class LoginPage extends StatefulWidget{
 }
 
 class _NewLoginState extends State<LoginPage>{
+  late final DatabaseRepository repository;
+  final TextEditingController userController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   
 
   @override
   void initState() {
     super.initState();
-    //check if user is logged in already
-    _checkLogin();
+
+      //check if user is logged in already
+      _checkLogin();
+
+      print("Hållo");
+
+    $FloorAppDatabase.databaseBuilder("app_database").build().then((value) {
+      repository = DatabaseRepository(database: value);
+
+    });
   }
 
   void _checkLogin() async {
@@ -41,17 +59,52 @@ class _NewLoginState extends State<LoginPage>{
   }
 
   Future<String> _loginUser(LoginData data) async{
-    if(data.name == 'nug@expert.com' && data.password == '5TrNgP5Wd') {
-      final sp = await SharedPreferences.getInstance();
+    //need to check if user is in database
+    var user = await repository.findTodoById(data.name);
 
+    if(user != null && user.password == data.password) {
+      final sp = await SharedPreferences.getInstance();
+      sp.setString("username", user.username);
       return '';
     } else {
       return 'Wrong credentials';
     }
+
   }
 
   Future<String> _signUpUser(SignupData data) async {
-    return 'To be implemented';
+    if (data.name == null) {
+      return "No username! 😱";
+    }
+
+    var user = await repository.findTodoById(data.name!);
+
+    if (user != null) {
+      return "User already exists! 😱";
+    }
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfilePage(username: data.name, password: data.password))
+    );
+
+    final sp = await SharedPreferences.getInstance();
+    final todo = Todo(
+      sp.getString("pp_username") ?? "",
+      sp.getString("pp_password") ?? "",
+      sp.getInt("pp_height") ?? 0,
+      sp.getInt("pp_age") ?? 0,
+      sp.getInt("pp_weight") ?? 0,
+      sp.getString("pp_gen") ?? "",
+    );
+
+    await repository.insertTodo(todo);
+
+    sp.setString("username", data.name!);
+    sp.setString("password", data.password!);
+
+    return "Success!";
   }
 
   Future<String> _recoverPassword(String email) async {
@@ -67,7 +120,7 @@ class _NewLoginState extends State<LoginPage>{
       onSignup: _signUpUser,
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () async{
-        _toHomePage(context);
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const NavBar()));
       },
       messages: LoginMessages(
         userHint: 'Username',

@@ -13,10 +13,10 @@ import 'package:agri_fit/Database/Calories.dart';
 part 'database.g.dart';
 
 @TypeConverters([DateTimeConverter])
-@Database(version: 1, entities: [Todo, Calories, Steps])
+@Database(version: 1, entities: [Todo])
 abstract class AppDatabase extends FloorDatabase {
   //Add all the daos as getters here
   TodoDao get todoDao;
-  CaloriesDao get caloriesDao;
+  // CaloriesDao get caloriesDao;
   //StepsDao get stepsDao;
 }//AppDatabase 

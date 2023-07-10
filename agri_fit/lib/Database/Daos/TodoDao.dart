@@ -10,8 +10,8 @@ abstract class TodoDao {
   //@Query('SELECT * FROM Todo')
   //Future<List<Todo>> findAllTodos();
 
-  @Query('SELECT * FROM Todo WHERE id = id')
-  Future<Todo?> findTodoById(int id);
+  @Query('SELECT * FROM Todo WHERE username = username')
+  Future<Todo?> findTodoById(String username);
 
   //Query #2: INSERT -> this allows to add a Todo in the table
   @insert

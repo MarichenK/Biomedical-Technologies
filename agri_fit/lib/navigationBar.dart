@@ -41,7 +41,7 @@ class _HomePageState extends State<NavBar> {
   final _buildBody = <Widget>[
     HomePage(),
     MapPage(),
-    ProfilePage(editName: '', editAge: '', editGen: '', editHeight: '', editWeight: '',),
+    ProfilePage(),
   ];
 
   @override

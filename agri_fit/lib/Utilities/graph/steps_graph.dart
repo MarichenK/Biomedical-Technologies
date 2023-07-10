@@ -3,7 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class StepsGraph extends StatelessWidget {
-  final List weeklySteps;
+  final List<int> weeklySteps;
 
   const StepsGraph({
     super.key,
@@ -14,10 +14,10 @@ class StepsGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     // initialize bar data
     BarData myBarData = BarData(
-      minusThreeWeeks: weeklySteps[0], 
-      minusTwoWeeks: weeklySteps[1], 
-      lastWeek: weeklySteps[2], 
-      thisWeek: weeklySteps[3], 
+      minusThreeWeeks: weeklySteps[0].toDouble(), 
+      minusTwoWeeks: weeklySteps[1].toDouble(), 
+      lastWeek: weeklySteps[2].toDouble(), 
+      thisWeek: weeklySteps[3].toDouble(), 
       );
       myBarData.initializeBarData(); 
     

@@ -18,12 +18,12 @@ class DatabaseRepository extends ChangeNotifier{
     //return results;
   //}//findAllTodos
 
-  Future<Todo?> findTodoById(int id) async{
-    final result = await database.todoDao.findTodoById(id);
+  Future<Todo?> findTodoById(String username) async{
+    final result = await database.todoDao.findTodoById(username);
     return result;
   }//find specific dao
 
-  Future<List<Calories>> findCaloriesByDate(int id, DateTime startTime, DateTime endTime) async {
+  /* Future<List<Calories>> findCaloriesByDate(int id, DateTime startTime, DateTime endTime) async {
     final result = await database.caloriesDao.findCaloriesbyDate(id, startTime, endTime);
     return result;
   }
@@ -32,13 +32,13 @@ class DatabaseRepository extends ChangeNotifier{
   Future<List<Calories>> findLastWeekCalories(int id, DateTime time) async{
     final result = await database.caloriesDao.findLastWeekCalories(id);
     return result;
-  }
+  } */
 
-  Future<List<Calories>> findAllCalories(int id) async{
+  /* Future<List<Calories>> findAllCalories(int id) async{
     final result = database.caloriesDao.findAllCalories(id);
     return result;
   }
-
+ */
   /*
 
   Future<List<Steps>> findStepsByDate(int id, DateTime startTime, DateTime endTime) async {
@@ -65,10 +65,10 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }//insertTodo
 
-  Future<void> insertCalories(Calories calories) async{
+ /*  Future<void> insertCalories(Calories calories) async{
     await database.caloriesDao.insertCalories(calories);
     notifyListeners();
-  }
+  } */
 
   /*Future<void> insertSteps(Steps steps) async{
     await database.stepsDao.insertSteps(steps);
@@ -83,10 +83,10 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   }//removeTodo
 
-  Future<void> deleteCalories(Calories calories) async{
+  /* Future<void> deleteCalories(Calories calories) async{
     await database.caloriesDao.deleteCalories(calories);
     notifyListeners();
-  }
+  } */
 
   /*Future<void> deleteSteps(Steps steps) async{
     await database.stepsDao.deleteSteps(steps);
@@ -98,10 +98,10 @@ class DatabaseRepository extends ChangeNotifier{
     notifyListeners();
   } //update todo 
 
-  Future<void> updateCalories(Calories calories) async{
+  /* uture<void> updateCalories(Calories calories) async{
     await database.caloriesDao.updateCalories(calories);
     notifyListeners();
-  }
+  } */
 
   /*Future<void> updateSteps(Steps steps) async{
     await database.stepsDao.updateSteps(steps);

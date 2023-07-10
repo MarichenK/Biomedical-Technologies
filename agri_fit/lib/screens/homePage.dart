@@ -18,16 +18,6 @@ import 'package:agri_fit/Database/Steps.dart';
 import 'package:intl/intl.dart';
 
 
-void test = LineChart(
-  LineChartData(
-    // read about it in the LineChartData section
-  ),
-  //swapAnimationDuration: const Duration(milliseconds: 150), // Optional
-  //swapAnimationCurve: Curves.linear, // Optional
-);
-
-
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -39,31 +29,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<double> monthlySteps = [
-  6000.0,
-  8000.0,
-  15000.0,
-  16000.0,
-  17000.0,
-  15000.0,
-  18000.0,
-  14000.0,
-  14000.0,
-  15000.0,
-  10000.0,
-  8000.0
+  List<double> weeklySteps = [
+  6000,
+  8000,
+  15000,
+  16000,
 ];
 
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-      /*appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        //title: Text(HomePage.routename),
-        title: const Text('AgriFit', textScaleFactor: 1.5,),
-        foregroundColor: Color.fromARGB(255, 27, 179, 141),
-      ),*/
+
       // Hide appbar
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(0.0),
@@ -89,12 +65,13 @@ class _HomePageState extends State<HomePage> {
                         color: Color.fromARGB(255, 27, 179, 141))),
                 ),
 
+                // request button 
                 IconButton(
                   iconSize: 50,
                   color: Colors.grey,
                   icon: const Icon(Icons.refresh,),
                   splashRadius: 32,
-                  splashColor: Color.fromARGB(255, 237, 237, 237),
+                  splashColor: const Color.fromARGB(255, 237, 237, 237),
                   onPressed: () async {
                     final result = await _authorize();
                     final message = 
@@ -107,32 +84,35 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
 
+            // listview with data
+            // barGraph with weekly steps
             Expanded(
               child: ListView(
                 children: [
                   const Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Monthly steps',
+                    child: Text('Weekly steps',
                         textScaleFactor: 2.2,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ),
             
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 26),
             
                   SizedBox(
-                    height: 320,
+                    height: 330,
                     child: Container( 
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.grey[50]),
                     child:
                     StepsGraph(
-                      monthlySteps: monthlySteps,
+                      weeklySteps: weeklySteps,
                       ),
                   )),
             
                   const SizedBox(height: 36),
             
+                  // daily steps and calories burnt
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text('Activity today',
@@ -150,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                         width: 190,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Color.fromARGB(255, 27, 179, 141)),
+                          color: const Color.fromARGB(255, 27, 179, 141)),
                         
                         child: 
                             Center(child: Column (
@@ -186,12 +166,12 @@ class _HomePageState extends State<HomePage> {
                         width: 190,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: Color.fromARGB(255, 237, 237, 237)),
+                          color: const Color.fromARGB(255, 237, 237, 237)),
                         child:Center(child: Column(
                           children: [
-                            SizedBox(height: 40,),
-                            Text('Calories'),
-                            SizedBox(height: 10,),
+                            const SizedBox(height: 40,),
+                            const Text('Calories'),
+                            const SizedBox(height: 10,),
                       FutureBuilder<List<Callories>?>(
                         future: _requestCalsToday(),
                         builder: (BuildContext context, AsyncSnapshot<List<Callories>?> snapshot) {

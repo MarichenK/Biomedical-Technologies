@@ -31,6 +31,7 @@ class ProfilePage extends StatelessWidget {
   @override
 
   Widget build(BuildContext context) {
+    // calculating BMI
     double height = 1.70;
     double weight = 70;
 
@@ -39,15 +40,7 @@ class ProfilePage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      /*appBar: AppBar(
-        backgroundColor: Colors.grey[50],
-        elevation: 0,
-        title: const Text(
-          'AgriFit', 
-          textScaleFactor: 2.4, 
-          style: TextStyle(fontWeight: FontWeight.bold)),
-        foregroundColor: const Color.fromARGB(255, 27, 179, 141),
-      ),*/
+
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -66,7 +59,7 @@ class ProfilePage extends StatelessWidget {
             )
           ),
         
-        
+        // box with profile info
         child: Column(
           children: [
             const SizedBox(height: 150),
@@ -77,7 +70,8 @@ class ProfilePage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40),
                         color: const Color.fromARGB(255, 250, 250, 250)),
-                        
+                
+                // profile info
                 child: Column(
                   children: [
                     const SizedBox(height: 36),
@@ -103,7 +97,8 @@ class ProfilePage extends StatelessWidget {
                   ),
                     
                   const SizedBox(height: 46),
-                    
+                  
+                  // display BMI value
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -130,7 +125,8 @@ class ProfilePage extends StatelessWidget {
                   ),
                     
                   const SizedBox(height: 26),
-                    
+                  
+                  // display BMI status
                   const Padding(
                     padding: EdgeInsets.only(left: 50),
                     child: Align(
